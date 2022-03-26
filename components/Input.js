@@ -5,8 +5,8 @@ export default (props) => {
     <Input
       bg="#FFFFFF"
       width={props.width === undefined ? "100%" : props.width}
-      value={props.value === undefined ? "" : props.value}
-      onChangeText={props.onChangeText === undefined ? "" : props.onChangeText}
+      value={props.value}
+      onChangeText={props.onChangeText}
       margin="auto"
       marginBottom="2"
       px="3"
