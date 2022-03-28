@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import { View, Text, Image, Button, Alert } from "react-native";
-import SelectItems from "../components/SelectItems.js";
+import { View, Text, Image, StyleSheet } from "react-native";
+import {Button, Alert, Box, Fab, Icon, Select } from 'native-base';
+import { AntDesign, MaterialIcons } from "react-native-vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'; //Pour une gestion dans les fichiers système de l'application
 import * as MediaLibrary from 'expo-media-library'; //Pour une gestion dans les galleries d'image d'un utilisateur.
 
-export default () => {
+import SelectItems from "../components/SelectItems.js";
+import SelectState from "../components/SelectState.js";
+
+export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state}) => {
 
     const [image, setImage] = useState(null);
 
     //Donnée "fictive" (en attente de faire fonctionné via les props + BDD)
-    const categoryName = "Categorie";
+    const categoryName = "Catégorie";
     const roomName = "Pièce";
     const furnitureName = "Meuble";
 
@@ -29,9 +33,6 @@ export default () => {
         "Armoire",
         "Commode"
     ];
-
-    // const dirURI = FileSystem.documentDirectory + "Images/Wejmi/";
-    const dirURI = FileSystem.documentDirectory;
 
     const putCacheImageToDirectory = async (imageURI) => {
 
@@ -88,7 +89,7 @@ export default () => {
                 mediaTypes:ImagePicker.MediaTypeOptions.Images,
                 allowsEditing:true,
                 aspect:[1,1],
-                quality:0.5
+                quality:1
             })
             if(!data.cancelled){
                 let newURI = await putCacheImageToDirectory(data.uri);
@@ -99,14 +100,75 @@ export default () => {
         }
     }
 
+    const displayingState = () => {
+        if (isCreatingForm) {
+            return;
+        } else {
+            return;
+        }
+    }
+
     return (
-        <View>
-            <SelectItems listName={categoryName} items={categoryItems}/>
-            <SelectItems listName={roomName} items={roomItems}/>
-            <SelectItems listName={furnitureName} items={furnituresItems}/>
-            <Button title="Pick an image" onPress={pickImage}/>
-            <Button title="Open camera" onPress={pickCameraImage}/>
-            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <View style={styles.container}>
+            {
+                displayingState()
+            }
+            <SelectState chosenState="Rangé"/>
+            <SelectItems style={styles.selectItems} listName={categoryName} items={categoryItems}/>
+            <SelectItems style={styles.selectItems} listName={roomName} items={roomItems}/>
+            <SelectItems style={styles.selectItems} listName={furnitureName} items={furnituresItems}/>
+            <Box style={styles.imageBox}>
+                <Fab style={styles.fabButton} renderInPortal={false} shadow={5} placement={"bottom-left"} bottom={70} left={20} size="sm" 
+                icon={<Icon color="black" as={MaterialIcons} name="photo-camera" size="sm" />} 
+                onPress={pickCameraImage}
+                />
+                <Fab style={styles.fabButton} renderInPortal={false} shadow={5} bottom={70} right={20} size="sm" 
+                icon={<Icon color="black" as={MaterialIcons} name="photo-library" size="sm" />} 
+                onPress={pickImage}
+                />
+                <Image source={{ uri: image }} style={{ height: 200, borderRadius: 20 }} />
+            </Box>
+            <Button style={styles.validateButton} borderRadius="20"><Text style={styles.text}>Valider +</Text></Button>
         </View>
     )
 }
+
+const colors = {
+    mainGreenColor: "#00FFC2",
+    darkGreenColor: "#2B9C81",
+    mainGreyColor: "#F3F3F3",
+    darkGreyColor: "#9C9C9C"
+
+};
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    selectItems: {
+        margin: 50,
+    },
+    imageBox: {
+        borderRadius: 20,
+        borderColor: colors.mainGreenColor,
+        borderWidth: 2,
+        justifyContent: "space-around",
+        margin: 20,
+        width: 350,
+    },
+    validateButton: {
+        backgroundColor: colors.mainGreenColor,
+        width: 100,
+        margin: 20,       
+    },
+    fabButton: {
+        backgroundColor: colors.mainGreenColor,
+    },
+    text: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 18,
+    }
+
+});

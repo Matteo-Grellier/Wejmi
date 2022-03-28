@@ -5,7 +5,7 @@ import FormObject from "../components/FormObject.js";
 export default () => {
   return (
     <View>
-      <FormObject/>
+      <FormObject />
     </View>
   );
 };
