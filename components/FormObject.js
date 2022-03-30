@@ -8,10 +8,12 @@ import * as MediaLibrary from 'expo-media-library'; //Pour une gestion dans les 
 
 import SelectItems from "../components/SelectItems.js";
 import SelectState from "../components/SelectState.js";
+import InputItem from "../components/Input.js";
 
 export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state}) => {
 
     const [image, setImage] = useState(null);
+    const [inputName, setInputName] = useState('');
 
     //Donnée "fictive" (en attente de faire fonctionné via les props + BDD)
     const categoryName = "Catégorie";
@@ -104,16 +106,19 @@ export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, ch
         if (isCreatingForm) {
             return;
         } else {
-            return;
+            return (<SelectState chosenState="Rangé"/>);
         }
     }
 
     return (
         <View style={styles.container}>
+
+            <InputItem width={200} value={inputName} placeholder={"Nom"} 
+            onChangeText={(newName) => setInputName(newName)}
+            />
             {
                 displayingState()
-            }
-            <SelectState chosenState="Rangé"/>
+            }            
             <SelectItems style={styles.selectItems} listName={categoryName} items={categoryItems}/>
             <SelectItems style={styles.selectItems} listName={roomName} items={roomItems}/>
             <SelectItems style={styles.selectItems} listName={furnitureName} items={furnituresItems}/>
@@ -145,6 +150,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         justifyContent: "center",
+        flex: 1,
     },
     selectItems: {
         margin: 50,
@@ -154,13 +160,13 @@ const styles = StyleSheet.create({
         borderColor: colors.mainGreenColor,
         borderWidth: 2,
         justifyContent: "space-around",
-        margin: 20,
+        margin: 10,
         width: 350,
     },
     validateButton: {
         backgroundColor: colors.mainGreenColor,
         width: 100,
-        margin: 20,       
+        margin: 10,       
     },
     fabButton: {
         backgroundColor: colors.mainGreenColor,
