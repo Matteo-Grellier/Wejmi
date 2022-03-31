@@ -33,6 +33,13 @@ export default ({ navigation }) => {
       >
         DOGE
       </Button>
+      <Button
+        onPress={() => {
+          navigation.navigate("bdd");
+        }}
+      >
+        BDD
+      </Button>
     </View>
   );
 };
