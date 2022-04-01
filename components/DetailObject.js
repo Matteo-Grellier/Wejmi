@@ -1,15 +1,22 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable, Image, FlatList } from 'react-native'; 
-import { DisplayingIconState } from './SelectState';
+import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
+import SelectState from './SelectState';
 
+const DetailObject = ({navigation, name}) => {
 
-const DetailObject = () => {
     return ( 
-        <View style={styles.container}>
-            <Pressable>
+        <View >
+            <Pressable 
+            style={styles.container} 
+            key={1}
+            onPress={() => {
+                navigation.navigate("Modifier un Objet");
+            }}
+            
+            >
                 <View style={styles.description}>
                     <Text style={styles.objets}>
-                        Caleçons sales
+                        {name}
                     </Text>
                     <Text style={styles.pièceTitre}>
                         Pièce
@@ -23,14 +30,17 @@ const DetailObject = () => {
                     <Text style={styles.meuble}>
                         Bac à linge
                     </Text>
-                    <DisplayingIconState/>
+                    <View style={styles.selectBox}>
+                        <SelectState style={styles.state} chosenState="Rangé" ></SelectState>
+                    </View>
                 </View>
-
-                <Image 
-                style={styles.image} 
-                source={require("../assets/ynov_nantes_audio.png")} 
-                alt="Alternate Text"
-                />
+                <View style={styles.image}>
+                    <Image 
+                    style={styles.image} 
+                    source={require("../assets/PXL_20220331_125622154.jpg")} 
+                    alt="Alternate Text"
+                    />
+                </View>
             </Pressable>
         </View>
     );
@@ -38,35 +48,39 @@ const DetailObject = () => {
 const styles = StyleSheet.create({
     container: {
         width: '90%',
-        height: '45%',
         marginLeft: '5%',
+        left: '3%',
         borderRadius: 10,
         marginTop: '10%',
+        paddingTop: '10%',
         backgroundColor: '#00FFC2',
-        position: 'relative',
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-end',
     },
     description: {
-        position: 'absolute',
-        right: '5%',
+        left: '-5%',
     },
     objets: {
+        textDecorationLine: 'underline',
         fontWeight: 'bold',
-        top: '7%',
-        paddingBottom: '10%',
+        top: '-10%',
+        paddingBottom: '-2%',
         right: 10,
         fontSize: 20,
     },
     pièceTitre: {
         fontWeight: 'bold',
         right: 20,
+        top: '-5%',
         fontSize: 15,
         color: '#535353',
     },
     pièce: {
         fontWeight: 'bold',
+        top: '-5%',
         fontSize: 20,
         right: 20,
-        marginBottom: '10%',
+        marginBottom: '2%',
     },
     meubleTitre: {
         right: 20,
@@ -80,10 +94,20 @@ const styles = StyleSheet.create({
         right: 20,
     },
     image: {
-        height: '90%',
-        top: 21,
-        bottom: 0,
-        left:20,
+        width: '80%',
+        height: '97%',
+        top: '-3%',
+        marginLeft: '2%',
+        borderRadius: 10,
+        flex: 1,
+        left: '-17%',
+    },
+    state: {
+        right: '-5%',
+        top: '-5%',
+    },
+    selectBox: {
+        left: '-15%',
     },
 });
 
