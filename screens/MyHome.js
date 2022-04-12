@@ -5,9 +5,9 @@ import ListOptions from "../components/ListOptions";
 export default () => {
   return (
     <ScrollView>
-      <ListOptions optionTab="Catégories"></ListOptions>
-      <ListOptions optionTab="Pièces"></ListOptions>
-      <ListOptions optionTab="Meubles"></ListOptions>
+      <ListOptions optionTab="category"></ListOptions>
+      <ListOptions optionTab="room"></ListOptions>
+      <ListOptions optionTab="furniture"></ListOptions>
     </ScrollView>
   );
 };
