@@ -14,15 +14,16 @@ export default ({ optionTab }) => {
   const ShowOptions = () => {
     isShown ? setShown(false) : setShown(true);
   };
+
   let placeholderInput = "";
   switch (optionTab) {
-    case "Catégories":
+    case "category":
       placeholderInput = "Nouvelle catégorie";
       break;
-    case "Pièces":
+    case "room":
       placeholderInput = "Nouvelle pièce";
       break;
-    case "Meubles":
+    case "furniture":
       placeholderInput = "Nouveau meuble";
       break;
   }
@@ -43,6 +44,16 @@ export default ({ optionTab }) => {
       ))}
     </ScrollView>
   );
+
+  const AddOption = () => {
+    db.transaction((tx) => {
+      tx.executeSql("INSERT INTO ? (name) VALUES (?);", [optionTab, name]);
+      tx.executeSql("SELECT * FROM ?;", [optionTab], { tx, results });
+    });
+    setOptions([...myOptions, currentOption]);
+    setCurrentOption("");
+    setShown(true);
+  };
   return (
     <View>
       <Pressable
@@ -74,11 +85,7 @@ export default ({ optionTab }) => {
             onChangeText={(text) => setCurrentOption(text)}
           />
           <IconButton
-            onPress={() => {
-              setOptions([...myOptions, currentOption]);
-              setCurrentOption("");
-              setShown(true);
-            }}
+            onPress={AddOption}
             icon={<Icon as={AntDesign} name="plus" />}
             borderRadius="full"
             bg="#00FFC2"
