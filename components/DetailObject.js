@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
 import SelectState from './SelectState';
 
-const DetailObject = ({navigation, name}) => {
+const DetailObject = ({navigation, name, room, category, furniture, state, photo}) => {
 
     return ( 
         <View >
@@ -19,25 +19,25 @@ const DetailObject = ({navigation, name}) => {
                         {name}
                     </Text>
                     <Text style={styles.pièceTitre}>
-                        Pièce
+                        {room}
                     </Text>
                     <Text style={styles.pièce}>
-                        Chambre
+                        {category}
                     </Text>
                     <Text style={styles.meubleTitre}>
-                        Meuble
+                        {furniture}
                     </Text>
                     <Text style={styles.meuble}>
-                        Bac à linge
+                            
                     </Text>
                     <View style={styles.selectBox}>
-                        <SelectState style={styles.state} chosenState="Rangé" ></SelectState>
+                        <SelectState style={styles.state} chosenState={state} ></SelectState>
                     </View>
                 </View>
                 <View style={styles.image}>
                     <Image 
                     style={styles.image} 
-                    source={require("../assets/PXL_20220331_125622154.jpg")} 
+                    source={require("../assets/Easter_eggs.png")} 
                     alt="Alternate Text"
                     />
                 </View>

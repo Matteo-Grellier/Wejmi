@@ -4,6 +4,7 @@ import ModifyObject from "./screens/ModifyObject";
 import AddObject from "./screens/AddObject";
 import Doge from "./screens/Doge";
 import MyHome from "./screens/MyHome";
+import BDD from "./screens/BDD";
 import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -22,6 +23,7 @@ export default function App() {
           <Screen name="Ajouter un Objet" component={AddObject} />
           <Screen name="Ma Maison" component={MyHome}></Screen>
           <Screen name="Doge" component={Doge}></Screen>
+          <Screen name="bdd" component={BDD}></Screen>
         </Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
