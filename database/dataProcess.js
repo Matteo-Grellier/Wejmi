@@ -17,15 +17,24 @@ export async function openDatabase() {
 
 // -------------- Objects --------------
 
-export async function GetAllObject() {
+export async function GetAllObject(setData) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("SELECT * FROM object",[], (_, {insertID, rows}) => {
-            console.log(rows);
-            return rows
+            setData(rows._array);
+            // return rows
         });
     })
+}
 
+export async function GetObject(id, setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM object WHERE id = ?",[id], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })   
 }
 
 export async function AddObject(name, id_room, id_category, id_furniture, photo_uri) {
@@ -54,15 +63,25 @@ export async function DeleteObject(id) {
 
 // -------------- Categories --------------
 
-export async function GetAllCategory (name) {
+export async function GetAllCategory (setData) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("SELECT * FROM category",[], (_, {insertID, rows}) => {
-            console.log(rows);
-            return rows
+            setData(rows._array);
+            // return rows
         });
     })
 
+}
+
+export async function GetCategory(id, setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM category WHERE id = ?",[id], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })
 }
 
 export async function AddCategory(name) {
@@ -83,15 +102,25 @@ export async function DeleteCategory(id) {
 
 // -------------- Rooms --------------
 
-export async function GetAllRoom (name) {
+export async function GetAllRoom (setData) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("SELECT * FROM room",[], (_, {insertID, rows}) => {
-            console.log(rows);
-            return rows
+            setData(rows._array);
+            // return rows
         });
     })
 
+}
+
+export async function GetRoom(id, setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM room WHERE id = ?",[id], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })
 }
 
 export async function AddRoom(name) {
@@ -112,15 +141,25 @@ export async function DeleteRoom(id) {
 
 // -------------- Furniture --------------
 
-export async function GetAllFurniture (name) {
+export async function GetAllFurniture (setData) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("SELECT * FROM furniture",[], (_, {insertID, rows}) => {
-            console.log(rows);
-            return rows
+            setData(rows._array);
+            // return rows
         });
     })
 
+}
+
+export async function GetFurniture(id, setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM furniture WHERE id = ?",[id], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })
 }
 
 export async function AddFurniture(name) {
