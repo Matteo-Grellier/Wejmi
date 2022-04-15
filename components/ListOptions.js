@@ -1,59 +1,128 @@
 import { Heading, IconButton, Icon, HStack, Pressable } from "native-base";
 import { View, KeyboardAvoidingView, ScrollView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemOption from "./ItemOption";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Input from "./Input";
+import * as db from "../database/dataProcess";
 
 export default ({ optionTab }) => {
-  const [myOptions, setOptions] = useState(["Bureautique", "Makeup"]);
+  //Récupération des données
+  const allData = async () => {
+    const database = await db.openDatabase();
+    const request = "SELECT id, name FROM " + optionTab;
+    database.transaction((tx) => {
+      tx.executeSql(request, [], (_, { insertID, rows }) => {
+        let results = [];
+        rows._array.map((i) => {
+          let oneOption = { id: i.id, name: i.name };
+          results.push(oneOption);
+        });
+        setOptions(results);
+      });
+    });
+  };
 
-  const [currentOption, setCurrentOption] = useState("");
+  //useStates pour : toutes les options, une nouvelle option, montrer les options
+  const [allOptions, setOptions] = useState([{ id: 0, name: "" }]);
+  const [newOption, setNewOption] = useState("");
   const [isShown, setShown] = useState(false);
 
+  //Mise à jour des options avec un useEffect
+  useEffect(async () => {
+    allData();
+  }, [allOptions]);
   const ShowOptions = () => {
     isShown ? setShown(false) : setShown(true);
   };
 
+  //Affichage des titres des options (catégories | meubles | pièces)
   let placeholderInput = "";
+  let title = "";
   switch (optionTab) {
     case "category":
+      title = "Catégories";
       placeholderInput = "Nouvelle catégorie";
       break;
     case "room":
+      title = "Pièces";
       placeholderInput = "Nouvelle pièce";
       break;
     case "furniture":
+      title = "Meubles";
       placeholderInput = "Nouveau meuble";
       break;
   }
-  if (optionTab == "Catégories") {
-    placeholderInput = "Nouvelle catégorie";
-  }
+  // Ajout d'une option
+  const AddOption = async () => {
+    let foundOne = false;
+    allOptions.map((option) => {
+      if (option.name === newOption) {
+        alert("Cette option existe déjà");
+        foundOne = true;
+      }
+    });
+    if (!foundOne) {
+      const database = await db.openDatabase();
+      database.transaction((tx) => {
+        switch (optionTab) {
+          case "category":
+            tx.executeSql("INSERT INTO category (name) VALUES (?);", [
+              newOption,
+            ]);
+            break;
+          case "room":
+            tx.executeSql("INSERT INTO room (name) VALUES (?);", [newOption]);
+            break;
+          case "furniture":
+            tx.executeSql("INSERT INTO furniture (name) VALUES (?);", [
+              newOption,
+            ]);
+            break;
+        }
+
+        allData();
+      });
+      setNewOption("");
+    }
+    setShown(true);
+  };
+
+  //Suppression d'une option
+  const deleteOneOption = async (id) => {
+    const database = await db.openDatabase();
+
+    database.transaction((tx) => {
+      switch (optionTab) {
+        case "category":
+          tx.executeSql("DELETE FROM category WHERE id = ?", [id]);
+          break;
+        case "room":
+          tx.executeSql("DELETE FROM room WHERE id = ?", [id]);
+          break;
+        case "furniture":
+          tx.executeSql("DELETE FROM furniture WHERE id = ?", [id]);
+          break;
+      }
+    });
+    allData();
+  };
+
+  //Composant qui affiche les options
   const Options = (
     <ScrollView marginTop={10}>
-      {myOptions.map((option, index) => (
+      {allOptions.map((option) => (
         <ItemOption
-          text={option}
-          key={index}
+          text={option.name}
+          key={option.id}
           deleteOption={() => {
-            myOptions.splice(index, 1);
-            setOptions([...myOptions]);
+            deleteOneOption(option.id);
           }}
         ></ItemOption>
       ))}
     </ScrollView>
   );
 
-  const AddOption = () => {
-    db.transaction((tx) => {
-      tx.executeSql("INSERT INTO ? (name) VALUES (?);", [optionTab, name]);
-      tx.executeSql("SELECT * FROM ?;", [optionTab], { tx, results });
-    });
-    setOptions([...myOptions, currentOption]);
-    setCurrentOption("");
-    setShown(true);
-  };
   return (
     <View>
       <Pressable
@@ -72,7 +141,7 @@ export default ({ optionTab }) => {
             justifyContent="center"
             top="96"
           />
-          {optionTab}
+          {title}
         </Heading>
       </Pressable>
       {isShown === true ? Options : <></>}
@@ -81,8 +150,8 @@ export default ({ optionTab }) => {
           <Input
             width="80%"
             placeholder={placeholderInput}
-            value={currentOption}
-            onChangeText={(text) => setCurrentOption(text)}
+            value={newOption}
+            onChangeText={(text) => setNewOption(text)}
           />
           <IconButton
             onPress={AddOption}
