@@ -1,4 +1,4 @@
-import { openDatabase, GetAllObject, AddObject, ModifyObject, DeleteObject, GetAllCategory, AddCategory, DeleteCategory, GetAllRoom, AddRoom, DeleteRoom, GetAllFurniture, AddFurniture, DeleteFurniture } from "../database/dataProcess.js";
+import { openDatabase, GetAllObject, AddObject, ModifyObject, DeleteObject, GetAllCategory, AddCategory, DeleteCategory, GetAllRoom, AddRoom, DeleteRoom, GetAllFurniture, AddFurniture, DeleteFurniture, GetObject } from "../database/dataProcess.js";
 import { Image } from "native-base";
 import { useState, useEffect } from "react";
 import { View, Text, Button } from "react-native";
@@ -22,7 +22,8 @@ export default () => {
         
         // const test = await GetAllObject();
 
-        await GetAllObject(setActualData);
+        // await GetAllObject(setActualData);
+        await GetObject(1, setActualData);
 
         console.log(actualData);
     };
@@ -34,7 +35,11 @@ export default () => {
             <Text>{texty}</Text>
             {
                 actualData.map((value, index) =>(
-                    <Text key={index}>{value.name}</Text>
+                    <View key={index}>
+                        <Text>{value.name}</Text>
+                        <Text>{value.id_furniture}</Text>
+                        <Text>{value.furniture_name}</Text>
+                    </View>
                 ))
             }
             
