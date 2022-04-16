@@ -1145,6 +1145,17 @@
     "lodash.pick" "^4.4.0"
     "lodash.template" "^4.5.0"
 
+"@expo/websql@^1.0.1":
+  "integrity" "sha1-//DPnBuqH3D54dZYt8OaQg2bEKk="
+  "resolved" "https://registry.npmjs.org/@expo/websql/-/websql-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "argsarray" "^0.0.1"
+    "immediate" "^3.2.2"
+    "noop-fn" "^1.0.0"
+    "pouchdb-collections" "^1.0.1"
+    "tiny-queue" "^0.2.1"
+
 "@formatjs/ecma402-abstract@1.11.3":
   "integrity" "sha512-kP/Buv5vVFMAYLHNvvUzr0lwRTU0u2WTy44Tqwku1X3C3lJ5dKqDCYVqA8wL+Y19Bq+MwHgxqd5FZJRCIsLRyQ=="
   "resolved" "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.3.tgz"
@@ -2348,6 +2359,11 @@
   dependencies:
     "sprintf-js" "~1.0.2"
 
+"argsarray@^0.0.1":
+  "integrity" "sha1-bnIHtOzbObCviDA/pa4ivajfYcs="
+  "resolved" "https://registry.npmjs.org/argsarray/-/argsarray-0.0.1.tgz"
+  "version" "0.0.1"
+
 "arr-diff@^4.0.0":
   "integrity" "sha1-1kYQdP6/7HHn4VI1dhoyml3HxSA="
   "resolved" "https://registry.npmjs.org/arr-diff/-/arr-diff-4.0.0.tgz"
@@ -3407,6 +3423,13 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-sqlite@~10.1.0":
+  "integrity" "sha512-yxVa+sDWhfuvYN1MJkQZK74ND3mEOyVm6o2bRoecP6MDZW6c7NXS7Q7kP157b80h8meHukIfkhd48NAe1peenA=="
+  "resolved" "https://registry.npmjs.org/expo-sqlite/-/expo-sqlite-10.1.1.tgz"
+  "version" "10.1.1"
+  dependencies:
+    "@expo/websql" "^1.0.1"
+
 "expo-status-bar@~1.2.0":
   "integrity" "sha512-pVZZ/kDCXFK79E4dCtRecs3XLC8aiwlciutSd/fFmUPJSQZ1Txia6hlKajPt0GAYft8/YnT0V3URXzWZOBniYQ=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.2.0.tgz"
@@ -3848,6 +3871,11 @@
   "resolved" "https://registry.npmjs.org/image-size/-/image-size-0.6.3.tgz"
   "version" "0.6.3"
 
+"immediate@^3.2.2":
+  "integrity" "sha512-HR7EVodfFUdQCTIeySw+WDRFJlPcLOJbXfwwZ7Oom6tjsvZ3bOkCDJHehQC3nxJrv7+f9XecwazynjU8e4Vw3Q=="
+  "resolved" "https://registry.npmjs.org/immediate/-/immediate-3.3.0.tgz"
+  "version" "3.3.0"
+
 "import-fresh@^2.0.0":
   "integrity" "sha1-2BNVwVYS04bGH53dOSLUMEgipUY="
   "resolved" "https://registry.npmjs.org/import-fresh/-/import-fresh-2.0.0.tgz"
@@ -3891,7 +3919,7 @@
   "resolved" "https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-9.11.4.tgz"
   "version" "9.11.4"
   dependencies:
-    "@formatjs/ecma402-abstract" "1.11.4"
+    "@formatjs/ecma402-abstract" "1.11.3"
     "@formatjs/fast-memoize" "1.2.1"
     "@formatjs/icu-messageformat-parser" "2.0.18"
     "tslib" "^2.1.0"
@@ -4954,7 +4982,7 @@
     "@react-native-aria/combobox" "^0.2.4-alpha.0"
     "@react-native-aria/focus" "^0.2.4"
     "@react-native-aria/interactions" "^0.2.2"
-    "@react-native-aria/listbox" "0.2.4-alpha.3"
+    "@react-native-aria/listbox" "^0.2.4-alpha.3"
     "@react-native-aria/overlays" "0.3.3-rc.0"
     "@react-native-aria/radio" "^0.2.4"
     "@react-native-aria/slider" "^0.2.5-alpha.1"
@@ -5053,6 +5081,11 @@
   "integrity" "sha512-LN4fydt9TqhZhThkZIVQnF9cwjU3qmUH9h78Mx/K7d3VvfRqqwthLwJEUOEL0QPZ0XQmNN7be5Ggit5+4dq3Bw=="
   "resolved" "https://registry.npmjs.org/node-stream-zip/-/node-stream-zip-1.15.0.tgz"
   "version" "1.15.0"
+
+"noop-fn@^1.0.0":
+  "integrity" "sha1-XzPUfxPSFQ35PgywNmmemC94/78="
+  "resolved" "https://registry.npmjs.org/noop-fn/-/noop-fn-1.0.0.tgz"
+  "version" "1.0.0"
 
 "normalize-css-color@^1.0.2":
   "integrity" "sha1-Apkel8zOxmI/5XOvu/Deah8+n40="
@@ -5339,6 +5372,11 @@
   "integrity" "sha1-AerA/jta9xoqbAL+q7jB/vfgDqs="
   "resolved" "https://registry.npmjs.org/posix-character-classes/-/posix-character-classes-0.1.1.tgz"
   "version" "0.1.1"
+
+"pouchdb-collections@^1.0.1":
+  "integrity" "sha1-/mOhfal3YRq+98uAJssalVP9g1k="
+  "resolved" "https://registry.npmjs.org/pouchdb-collections/-/pouchdb-collections-1.0.1.tgz"
+  "version" "1.0.1"
 
 "pretty-format@^26.5.2", "pretty-format@^26.6.2":
   "integrity" "sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg=="
@@ -6232,6 +6270,11 @@
   dependencies:
     "readable-stream" "~2.3.6"
     "xtend" "~4.0.1"
+
+"tiny-queue@^0.2.1":
+  "integrity" "sha1-JaZ/LG4lOyypQZd7XvdELvl6YEY="
+  "resolved" "https://registry.npmjs.org/tiny-queue/-/tiny-queue-0.2.1.tgz"
+  "version" "0.2.1"
 
 "tinycolor2@^1.4.2":
   "integrity" "sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA=="

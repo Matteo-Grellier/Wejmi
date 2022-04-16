@@ -5,23 +5,47 @@ import { useState } from "react";
 export default ({listName, chosenValue, setChosenValue, items}) => {
     // const [chosenVal, setChosenVal] = useState(chosenValue);
 
+    // if(chosenValue === undefined) {
+    //     chosenValue = {id: null, name: ""};
+    // }
+
+    // let previousChosen;
+
+    const changeActualChosenValue = (itemID) => {
+        // console.log(chosenValue);
+        // previousChosen = chosenValue;
+        // if(item == previousChosen) {
+        //     console.log("is the same");
+        // }
+
+        // if(item.name === previousChosen.name) {
+        //     console.log("is the same name");
+        // }
+        
+        let newActualObj = items.find(item => item.id === itemID); 
+        console.log(chosenValue);
+        console.log(itemID);
+        // setChosenValue(newActualObj);
+        setChosenValue(newActualObj);
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{listName}</Text>
             <Select borderColor={colors.mainGreenColor} fontSize={18} borderWidth={2} borderRadius={15} color={"black"} 
             minWidth="200" 
-            selectedValue={chosenValue} 
-            accessibilityLabel={chosenValue} 
+            selectedValue={chosenValue.id} 
+            accessibilityLabel={chosenValue.name} 
             placeholder={listName}
             _selectedItem={{
                 bg: "#00FFC2",
                 endIcon: <CheckIcon size="3" />
             }} 
             mt={1} 
-            onValueChange={itemValue => setChosenValue(itemValue)}>
+            onValueChange={itemValue => changeActualChosenValue(itemValue)}>
                 {
                     items.map((item, index)=> (
-                        <Select.Item label={item} value={item} key={index}/>
+                        <Select.Item key={index} label={item.name} value={item.id}/>
                     )) 
                 }
                 
