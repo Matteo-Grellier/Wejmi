@@ -135,7 +135,7 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
             roomID: actualRoom.id, 
             furnitureID: actualFurniture.id, 
             imageUri: image, 
-            stateID: 1
+            stateID: actualState.id,
         }
         
         processData(newData);

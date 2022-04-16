@@ -7,7 +7,7 @@ import {GetObject, GetCategory, GetFurniture, GetRoom, ModifyObject} from "../da
 
 export default ({id}) => {
 
-  id = 1;
+  id = 2;
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState(null);
@@ -24,34 +24,19 @@ export default ({id}) => {
   }, [])
 
   const setObjectData = (data) => {
-    console.log(data)
+    // console.log(data)
     // let objectData = {name: "", category: {id: null, name: ""}, room: {id: null, name: ""}, furniture: {id: null, name: ""}, image_uri: "", state: {id: null, name: ""} }
-
-    setName(data[0].name);
-    setImageUri(data[0].photo_uri);
     
     if(data.length > 0) {
-      // setActualData(data[0]); //On défini l'objet actuelle par le seul objet du tableau.
-      GetCategory(data[0].id_category, (categoryData) => {
-        if(categoryData.length > 0) {
-          setCategory(categoryData[0]);
-        } 
-      });
-      GetRoom(data[0].id_room, (roomData) => {
-        if(roomData.length > 0) {
-          setRoom(roomData[0]);
-        } 
-      });
-      GetFurniture(data[0].id_furniture, (furnitureData) => {
-        if(furnitureData.length > 0) {
-          setFurniture(furnitureData[0]);
-        } 
-        setIsLoaded(true);
-      });
+      setName(data[0].name);
+      setImageUri(data[0].photo_uri);
 
-      // setActualData(objectData);
-      // console.log("actual : ");
-      // console.log(actualData);
+      setCategory({id: data[0].id_category, name: data[0].category_name});
+      setRoom({id: data[0].id_room, name: data[0].room_name});
+      setFurniture({id: data[0].id_furniture, name: data[0].furniture_name});
+      setState({id: data[0].id_state, name: data[0].state_name});
+
+      setIsLoaded(true);
     }
   }
 
