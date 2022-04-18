@@ -5,13 +5,20 @@ import { AntDesign, MaterialIcons } from "react-native-vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'; //Pour une gestion dans les fichiers système de l'application
 import * as MediaLibrary from 'expo-media-library'; //Pour une gestion dans les galleries d'image d'un utilisateur.
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import SelectItems from "../components/SelectItems.js";
 import SelectState from "../components/SelectState.js";
+import InputItem from "../components/Input.js";
 
-export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state}) => {
+export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state, processData}) => {
 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(chosenPhoto);
+    const [inputName, setInputName] = useState(nameOfObject);
+    const [actualCategory, setActualCategory] = useState(chosenCategory);
+    const [actualRoom, setActualRoom] = useState(chosenRoom);
+    const [actualFurniture, setActualFurniture] = useState(chosenFurniture);
+    const [actualState, setActualState] = useState(state);
 
     //Donnée "fictive" (en attente de faire fonctionné via les props + BDD)
     const categoryName = "Catégorie";
@@ -51,6 +58,7 @@ export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, ch
                     console.log('File Saved Successfully!');
                     let assetsInWejmi = await MediaLibrary.getAssetsAsync({album: album}); //On récupère tous les assets de l'album (en effet, l'asset créé ne correspond pas à celui dans l'album Wejmi)
                     let actualAsset = assetsInWejmi.assets[assetsInWejmi.assets.length - 1]; //On récupère le dernier élément de l'album (le plus récent)
+                    
                     return actualAsset.uri; //on retourne l'actuel URI.
                 }
             } catch (error) {
@@ -104,19 +112,36 @@ export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, ch
         if (isCreatingForm) {
             return;
         } else {
-            return;
+            return (<SelectState chosenState={actualState} setChosenState={setActualState}/>);
         }
     }
 
+    const changeData = () => {
+        //mettreDansLaBDD()
+        const newData = {
+            name: nameOfObject, 
+            category: actualCategory, 
+            room: actualRoom, 
+            furniture: actualFurniture, 
+            imageUri: image, 
+            state: actualState
+        }
+        
+        processData(newData);
+    }
+
     return (
-        <View style={styles.container}>
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+
+            <InputItem width={300} value={inputName} placeholder={"Nom"} 
+            onChangeText={(newName) => setInputName(newName)}
+            />
             {
                 displayingState()
-            }
-            <SelectState chosenState="Rangé"/>
-            <SelectItems style={styles.selectItems} listName={categoryName} items={categoryItems}/>
-            <SelectItems style={styles.selectItems} listName={roomName} items={roomItems}/>
-            <SelectItems style={styles.selectItems} listName={furnitureName} items={furnituresItems}/>
+            }            
+            <SelectItems style={styles.selectItems} listName={categoryName} chosenValue={chosenCategory} setChosenValue={setActualCategory} items={categoryItems}/>
+            <SelectItems style={styles.selectItems} listName={roomName} chosenValue={chosenRoom} setChosenValue={setActualRoom} items={roomItems}/>
+            <SelectItems style={styles.selectItems} listName={furnitureName} chosenValue={chosenFurniture} setChosenValue={setActualFurniture} items={furnituresItems}/>
             <Box style={styles.imageBox}>
                 <Fab style={styles.fabButton} renderInPortal={false} shadow={5} placement={"bottom-left"} bottom={70} left={20} size="sm" 
                 icon={<Icon color="black" as={MaterialIcons} name="photo-camera" size="sm" />} 
@@ -128,8 +153,8 @@ export default ({isCreatingForm, chosenCategory, chosenRoom, chosenFurniture, ch
                 />
                 <Image source={{ uri: image }} style={{ height: 200, borderRadius: 20 }} />
             </Box>
-            <Button style={styles.validateButton} borderRadius="20"><Text style={styles.text}>Valider +</Text></Button>
-        </View>
+            <Button style={styles.validateButton} borderRadius="20" onPress={() => changeData()}><Text style={styles.text}>Valider +</Text></Button>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -144,23 +169,25 @@ const colors = {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        justifyContent: "center",
+        marginTop: 20,
+        // justifyContent: "center",
+        // flex: 1,
     },
     selectItems: {
-        margin: 50,
+        // margin: 50,
     },
     imageBox: {
         borderRadius: 20,
         borderColor: colors.mainGreenColor,
         borderWidth: 2,
         justifyContent: "space-around",
-        margin: 20,
+        margin: 10,
         width: 350,
     },
     validateButton: {
         backgroundColor: colors.mainGreenColor,
         width: 100,
-        margin: 20,       
+        margin: 10,       
     },
     fabButton: {
         backgroundColor: colors.mainGreenColor,

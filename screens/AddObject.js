@@ -1,16 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import SelectItems from "../components/SelectItems.js"
 import FormObject from "../components/FormObject.js";
 import BDD from "./BDD.js";
 
 export default () => {
   return (
-    <View>
-      <BDD>
-        test
-
-      </BDD>
-      <FormObject />
+    <View style={styles.container}>
+      <FormObject isCreatingForm={true}/>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});

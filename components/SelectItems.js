@@ -2,23 +2,23 @@ import { Select, CheckIcon } from "native-base";
 import { View, StyleSheet, Text } from "react-native";
 import { useState } from "react";
 
-export default ({listName, items}) => {
-    const [chosenVal, setChosenVal] = useState(listName);
+export default ({listName, chosenValue, setChosenValue, items}) => {
+    // const [chosenVal, setChosenVal] = useState(chosenValue);
 
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{listName}</Text>
             <Select borderColor={colors.mainGreenColor} fontSize={18} borderWidth={2} borderRadius={15} color={"black"} 
             minWidth="200" 
-            selectedValue={chosenVal} 
-            accessibilityLabel={chosenVal} 
-            placeholder={chosenVal}
+            selectedValue={chosenValue} 
+            accessibilityLabel={chosenValue} 
+            placeholder={listName}
             _selectedItem={{
                 bg: "#00FFC2",
                 endIcon: <CheckIcon size="3" />
             }} 
             mt={1} 
-            onValueChange={itemValue => setChosenVal(itemValue)}>
+            onValueChange={itemValue => setChosenValue(itemValue)}>
                 {
                     items.map((item, index)=> (
                         <Select.Item label={item} value={item} key={index}/>
@@ -40,7 +40,7 @@ const colors = {
 
 const styles = StyleSheet.create({
     container: {
-        margin: 20,
+        margin: 10,
     },
     text: {
         marginLeft: 10,

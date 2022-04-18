@@ -1,3 +1,4 @@
+import { GetAllObject, AddObject, ModifyObject, DeleteObject, GetAllCategory, AddCategory, DeleteCategory, GetAllRoom, AddRoom, DeleteRoom, GetAllFurniture, AddFurniture, DeleteFurniture } from "../database/dataProcess.js";
 import { Button, ScrollView, StatusBar} from "native-base";
 import  openDatabase  from "../database/dataProcess.js";
 import React from "react";
@@ -6,46 +7,32 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
 const { useState } = React;
 
+var data = {}
+
 export default ({ navigation }) => {
+	const [arrays, setArrays] = useState([]);
 	const [object, setObject] = useState([]);
 	const [room, setRoom] = useState([]);
 	const [state, setState] = useState([]);
 
 	const DataYe = async () => {
-        console.log("bouton");
-        const db = await openDatabase();
-		db.transaction((tx) => {
-			tx.executeSql("SELECT * FROM room",[], (_, {insertID, rows}) => {
-				// retrieve array of all object
-				rows._array;
-				setRoom(rows._array);
-				console.log(room);
-			});
-		});
-        db.transaction((tx) => {
-            tx.executeSql("SELECT * FROM object",[], (_, {insertID, rows}) => {
-                // retrieve array of all object
-                rows._array;
-				setObject(rows._array);
-				console.log(object);
-            });
-        });
-		
-		db.transaction((tx) => {
-			tx.executeSql("SELECT * FROM state",[], (_, {insertID, rows}) => {
-				// retrieve array of all object
-				rows._array;
-				setState(rows._array);
-				console.log(state);
-			});
-		});
+        await GetAllObject(setObject);
+		setArrays(arrays => [...arrays, ...object]);
+		await GetAllRoom(setRoom);
+		setArrays(arrays => [...arrays, ...room]);
+		// await GetAllRoom(setRoom);
+		// await GetAllObject(setObject);
+
+		console.log(arrays);
+		// console.log(room);
     };
 
+	const wipe = async () => {
+		setArrays([]);
 
 
 
-
-
+	};
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text>Liste des objets</Text>
@@ -81,22 +68,25 @@ export default ({ navigation }) => {
 			onPress={() => {
 				DataYe();
 			}}
-			></Button>
+			>AllObjects</Button>
+			<Button
+			onPress={() => {
+				wipe();
+			}}
+			>Wipe</Button>
 
 			<ScrollView style={styles.scrollView}>
 				{
-					
-					object.map((item, index) => {
-						return (
-							<DetailObject
+					arrays.map((value, index) => (
+						<DetailObject
+								name={value.objectName}
 								key={index}
-								navigation={navigation}
-								name={item.name}
-								room={item.room}
-								state={state[item.state_id]}
-							/>
-						);
-					})
+								// room={value[objectValue.objectName]}	
+						></DetailObject>
+							
+
+						
+					))
 				}
 			</ScrollView>
 		</SafeAreaView>
