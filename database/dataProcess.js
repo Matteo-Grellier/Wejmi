@@ -19,9 +19,9 @@ export async function openDatabase() {
 
 export async function GetAllObject(setData) {
     const db = await openDatabase();
-    console.log(db);
+    const selectRequest = "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
     db.transaction((tx) => {
-        tx.executeSql("SELECT * FROM object",[], (_, {insertID, rows}) => {
+        tx.executeSql(selectRequest,[], (_, {insertID, rows}) => {
             setData(rows._array);
             // return rows
         });
@@ -30,8 +30,9 @@ export async function GetAllObject(setData) {
 
 export async function GetObject(id, setData) {
     const db = await openDatabase();
+    const selectRequestWithID = "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id WHERE object.id = ?";
     db.transaction((tx) => {
-        tx.executeSql("SELECT * FROM object WHERE id = ?",[id], (_, {insertID, rows}) => {
+        tx.executeSql(selectRequestWithID,[id], (_, {insertID, rows}) => {
             setData(rows._array);
             // return rows
         });
@@ -175,6 +176,45 @@ export async function DeleteFurniture(id) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("DELETE FROM furniture WHERE id = ?;", [id] );
+    })
+
+}
+
+// -------------- State --------------
+
+export async function GetAllState (setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM state",[], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })
+
+}
+
+export async function GetState(id, setData) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("SELECT * FROM state WHERE id = ?",[id], (_, {insertID, rows}) => {
+            setData(rows._array);
+            // return rows
+        });
+    })
+}
+
+export async function AddState(name) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("INSERT INTO state (name) VALUES (?)", [name] );
+    })
+
+}
+
+export async function DeleteState(id) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("DELETE FROM state WHERE id = ?;", [id] );
     })
 
 }
