@@ -28,12 +28,15 @@ export async function GetAllObject(setData) {
     })
 }
 
-export async function GetObject(id, setData) {
+export async function GetObject(setData) {
     const db = await openDatabase();
-    const selectRequestWithID = "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id WHERE object.id = ?";
+    const selectRequestWithID = "SELECT object.name, furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
     db.transaction((tx) => {
-        tx.executeSql(selectRequestWithID,[id], (_, {insertID, rows}) => {
+
+        tx.executeSql(selectRequestWithID,[], (_, {insertID, rows}) => {
+            console.log("test");
             setData(rows._array);
+            console.log(rows);
             // return rows
         });
     })   
@@ -55,10 +58,10 @@ export async function ModifyObject(id, name, id_room, id_category, id_furniture,
 
 }
 
-export async function DeleteObject(id) {
+export async function DeleteObject() {
     const db = await openDatabase();
     db.transaction((tx) => {
-        tx.executeSql("DELETE FROM object WHERE id = ?;", [id] );
+        tx.executeSql("DELETE FROM object WHERE id ;", [] );
     })
 
 }

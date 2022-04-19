@@ -2,13 +2,13 @@ import React from 'react';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
 import SelectState from './SelectState';
 
-const DetailObject = ({navigation, name, room, category, furniture, state, photo}) => {
+const DetailObject = ({navigation, name, room, category,id, furniture, state, photo}) => {
 
     return ( 
         <View >
             <Pressable 
             style={styles.container} 
-            key={1}
+            key={id}
             onPress={() => {
                 navigation.navigate("Modifier un Objet");
             }}
@@ -19,16 +19,16 @@ const DetailObject = ({navigation, name, room, category, furniture, state, photo
                         {name}
                     </Text>
                     <Text style={styles.pièceTitre}>
-                        {room}
+                        Pièce
                     </Text>
                     <Text style={styles.pièce}>
                         {category}
                     </Text>
                     <Text style={styles.meubleTitre}>
-                        {furniture}
+                        Meuble
                     </Text>
                     <Text style={styles.meuble}>
-                            
+                        {furniture}
                     </Text>
                     <View style={styles.selectBox}>
                         <SelectState style={styles.state} chosenState={state} ></SelectState>
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         top: '-10%',
         paddingBottom: '-2%',
-        right: 10,
+        display: 'flex',
+        alignItems: 'center',
         fontSize: 20,
     },
     pièceTitre: {

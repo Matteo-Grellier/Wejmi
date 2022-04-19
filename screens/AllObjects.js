@@ -1,4 +1,4 @@
-import { GetAllObject, AddObject, ModifyObject, DeleteObject, GetAllCategory, AddCategory, DeleteCategory, GetAllRoom, AddRoom, DeleteRoom, GetAllFurniture, AddFurniture, DeleteFurniture } from "../database/dataProcess.js";
+import { GetObject,GetAllObject, AddObject, ModifyObject, DeleteObject, GetAllCategory, AddCategory, DeleteCategory, GetAllRoom, AddRoom, DeleteRoom, GetAllFurniture, AddFurniture, DeleteFurniture } from "../database/dataProcess.js";
 import { Button, ScrollView, StatusBar} from "native-base";
 import  openDatabase  from "../database/dataProcess.js";
 import React from "react";
@@ -7,30 +7,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
 const { useState } = React;
 
-var data = {}
-
 export default ({ navigation }) => {
-	const [arrays, setArrays] = useState([]);
 	const [object, setObject] = useState([]);
-	const [room, setRoom] = useState([]);
-	const [state, setState] = useState([]);
 
 	const DataYe = async () => {
-        await GetAllObject(setObject);
-		setArrays(arrays => [...arrays, ...object]);
-		await GetAllRoom(setRoom);
-		setArrays(arrays => [...arrays, ...room]);
-		// await GetAllRoom(setRoom);
-		// await GetAllObject(setObject);
-
-		console.log(arrays);
-		// console.log(room);
+		// await AddObject("Toto", 1, 1, 1, 1, 1);
+		// await AddObject("Tata", 3, 2, 2, 1, 1);
+        await GetObject(setObject);
+		
+		
     };
 
 	const wipe = async () => {
-		setArrays([]);
-
-
+		setObject([]);
 
 	};
 	return (
@@ -77,14 +66,19 @@ export default ({ navigation }) => {
 
 			<ScrollView style={styles.scrollView}>
 				{
-					arrays.map((value, index) => (
+					object.map((value, index) => (
 						<DetailObject
-								name={value.objectName}
 								key={index}
-								// room={value[objectValue.objectName]}	
-						></DetailObject>
-							
+								navigation={navigation}
 
+								id={value.id}
+								name={value.name}
+								room={value.room}
+								category={value.category}
+								state={value.state}
+								furniture={value.furniture}
+								img={value.photo_uri} 
+						></DetailObject>
 						
 					))
 				}
@@ -93,7 +87,6 @@ export default ({ navigation }) => {
 		);
 	};
 	
-
 	const styles = StyleSheet.create({
 		scrollView: {
 			marginHorizontal: 20,
