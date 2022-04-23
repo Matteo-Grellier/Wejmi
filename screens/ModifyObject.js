@@ -2,9 +2,9 @@ import { View, Text, StyleSheet } from "react-native";
 import FormObject from "../components/FormObject.js";
 import { useState, useEffect } from "react";
 
-export default ({id}) => {
-
-  id = 2;
+export default ({route, navigation}) => {
+  const { id } = route.params;
+  // id = 2;
 
   // const [name, setName] = useState("");
   // const [category, setCategory] = useState('');
@@ -24,7 +24,7 @@ export default ({id}) => {
       {name: 'Louis', category: 'Objets', room: 'Chambre', furniture: 'Commode', imageUri: '', state: 'lost'},
       {name: 'Album de Stromae', category: 'Objets', room: 'Bureau', furniture: 'Commode', imageUri: '', state: 'tidy'},
     ];
-
+    console.log(id + " " + "idddddddddddddd");
     // setName(temporaryData[id].name);
     // setCategory(temporaryData[id].category);
     // setRoom(temporaryData[id].room);
@@ -33,7 +33,7 @@ export default ({id}) => {
     // setState(temporaryData[id].state);
 
     // setActualData(temporaryData[id]);
-    return temporaryData[id];
+    return temporaryData[2];
   }
 
   const processData = (newData) => {

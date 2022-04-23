@@ -1,16 +1,32 @@
 import React from 'react';
+import { ModifyState, openDatabase } from '../database/dataProcess';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
 import SelectState from './SelectState';
 
-const DetailObject = ({navigation, name, room, category,id, furniture, state, photo}) => {
+const DetailObject = ({key, navigation, name,state_id, room, category,id, furniture, state, img }) => {
+    console.log(id + " " + "id");
+    
+    async function  ModifyState(id, state_id){
+        console.log("test");
+        const db = await openDatabase();
+        db.transaction((tx) => {
+            tx.executeSql("UPDATE object SET id_state = ? WHERE id = ?", [state_id, id ] );
+            // Select object table and print it in console
+            tx.executeSql("SELECT object.name, object.id_state as state_id ,object.id as id ,furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id", [], (_, {insertID, rows}) => {
+                console.log(rows._array);
+                // return rows
+            });
+
+        })
+    }
 
     return ( 
         <View >
             <Pressable 
             style={styles.container} 
-            key={id}
+            key={key}
             onPress={() => {
-                navigation.navigate("Modifier un Objet");
+                navigation.navigate("Modifier un Objet", {id: id});
             }}
             
             >
@@ -31,7 +47,7 @@ const DetailObject = ({navigation, name, room, category,id, furniture, state, ph
                         {furniture}
                     </Text>
                     <View style={styles.selectBox}>
-                        <SelectState style={styles.state} chosenState={state} ></SelectState>
+                        <SelectState style={styles.state} chosenState={state} setChosenState={ModifyState} ></SelectState>
                     </View>
                 </View>
                 <View style={styles.image}>

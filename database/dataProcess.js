@@ -30,7 +30,7 @@ export async function GetAllObject(setData) {
 
 export async function GetObject(setData) {
     const db = await openDatabase();
-    const selectRequestWithID = "SELECT object.name, furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
+    const selectRequestWithID = "SELECT object.name, object.id_state as state_id ,object.id as id ,furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
     db.transaction((tx) => {
 
         tx.executeSql(selectRequestWithID,[], (_, {insertID, rows}) => {
@@ -218,6 +218,14 @@ export async function DeleteState(id) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("DELETE FROM state WHERE id = ?;", [id] );
+    })
+
+}
+
+export async function ModifyState(name) {
+    const db = await openDatabase();
+    db.transaction((tx) => {
+        tx.executeSql("UPDATE state SET name = ? WHERE id = ?", [name] );
     })
 
 }
