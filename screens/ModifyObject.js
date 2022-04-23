@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 
 import {GetObject, GetCategory, GetFurniture, GetRoom, ModifyObject} from "../database/dataProcess"
 
-export default ({id}) => {
+export default ({id, navigation}) => {
 
-  id = 2;
+  id = 3;
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState(null);
@@ -16,7 +16,6 @@ export default ({id}) => {
   const [imageUri, setImageUri] = useState("");
   const [state, setState] = useState('tidy');
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [actualData, setActualData] = useState({});
 
 
   useEffect(() => {
@@ -24,8 +23,6 @@ export default ({id}) => {
   }, [])
 
   const setObjectData = (data) => {
-    // console.log(data)
-    // let objectData = {name: "", category: {id: null, name: ""}, room: {id: null, name: ""}, furniture: {id: null, name: ""}, image_uri: "", state: {id: null, name: ""} }
     
     if(data.length > 0) {
       setName(data[0].name);
@@ -41,8 +38,6 @@ export default ({id}) => {
   }
 
   const processData = (newData) => {
-    //mettreDansLaBDD();
-    // setActualData(newData);
     console.log(newData);
     console.log("hello world!")
     ModifyObject(id, newData.name, newData.roomID, newData.categoryID, newData.furnitureID, newData.stateID, newData.imageUri);
@@ -57,6 +52,8 @@ export default ({id}) => {
   chosenPhoto={imageUri}
   state={state}
   processData={processData}
+  idOfObject={id}
+  navigation={navigation}
   />)
 
   const loadingSkeleton = (

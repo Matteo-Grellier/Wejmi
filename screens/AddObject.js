@@ -4,7 +4,7 @@ import FormObject from "../components/FormObject.js";
 
 import {AddObject} from "../database/dataProcess";
 
-export default () => {
+export default ({navigation}) => {
 
   const category = {id: null, name: null};
   const room = {id: null, name: null};
@@ -12,8 +12,6 @@ export default () => {
   const state = {id: null, name: null};
 
   const processData = (newData) => {
-    //mettreDansLaBDD();
-    // setActualData(newData);
     console.log(newData);
     console.log("hello world!")
     AddObject(newData.name, newData.roomID, newData.categoryID, newData.furnitureID, newData.imageUri);
@@ -28,6 +26,7 @@ export default () => {
     chosenPhoto={null}
     state={state}
     processData={processData}
+    navigation={navigation}
     />)
 
   return (
