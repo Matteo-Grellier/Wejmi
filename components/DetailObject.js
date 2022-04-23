@@ -1,10 +1,11 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { ModifyState, openDatabase } from '../database/dataProcess';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
 import SelectState from './SelectState';
 
-const DetailObject = ({key, navigation, name,state_id, room, category,id, furniture, state, img }) => {
+const DetailObject = ({key, navigation, name,state_id, room, category,id, furniture, img }) => {
     console.log(id + " " + "id");
+    const [state, setState] = useState();
     
     async function  ModifyState(id, state_id){
         console.log("test");
@@ -18,6 +19,11 @@ const DetailObject = ({key, navigation, name,state_id, room, category,id, furnit
             });
 
         })
+    }
+
+    const setNewState = (newState) => {
+        setState(newState);
+        ModifyState(id, newState.id);
     }
 
     return ( 
@@ -47,7 +53,7 @@ const DetailObject = ({key, navigation, name,state_id, room, category,id, furnit
                         {furniture}
                     </Text>
                     <View style={styles.selectBox}>
-                        <SelectState style={styles.state} chosenState={state} setChosenState={ModifyState} ></SelectState>
+                        <SelectState style={styles.state} chosenState={state} setChosenState={setNewState} ></SelectState>
                     </View>
                 </View>
                 <View style={styles.image}>
