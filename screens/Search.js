@@ -3,140 +3,125 @@ import { Box, Button, Select } from "native-base";
 import Input from "../components/Input";
 import { useState, useEffect } from "react";
 import * as db from "../database/dataProcess";
+import SelectItems from "../components/SelectItems";
 
 export default () => {
   const [searchWord, setSearch] = useState("");
-  const [results, setResults] = useState([{ id: 0, name: "" }]);
-  const [counter, setCounter] = useState(0);
+  const [objects, setObjects] = useState([]);
+  const [results, setResults] = useState([]);
 
-  const searching = async () => {
-    const database = await db.openDatabase();
-    database.transaction((tx) => {
-      tx.executeSql(
-        "SELECT id, name FROM object",
-        [],
-        (_, { insertID, rows }) => {
-          let allObjects = [];
-          rows._array.map((i) => {
-            const regex = new RegExp(`${searchWord}`, "gmi");
-            if (regex.test(i.name) == true) {
-              let oneOption = { id: i.id, name: i.name };
-              allObjects.push(oneOption);
-            }
-          });
-          setResults(allObjects);
-        }
-      );
-    });
+  const [categoryItems, setCategoryItems] = useState([]);
+  const [roomItems, setRoomItems] = useState([]);
+  const [furnituresItems, setFurnitureItems] = useState([]);
+
+  const [actualCategory, setActualCategory] = useState({
+    id: -1,
+    name: "Catégories",
+  });
+  const [actualRoom, setActualRoom] = useState({ id: -1, name: "Pièces" });
+  const [actualFurniture, setActualFurniture] = useState({
+    id: -1,
+    name: "Meubles",
+  });
+
+  useEffect(async () => {
+    db.GetAllCategory(setCategoriesData);
+    db.GetAllRoom(setRoomsData);
+    db.GetAllFurniture(setFurnituresData);
+    db.GetAllObject(setObjects);
+
+    setResults(objects);
+  }, []);
+  const setCategoriesData = (data) => {
+    setCategoryItems([
+      ...data,
+      {
+        id: -1,
+        name: "Toutes les catégories",
+      },
+    ]);
   };
+  const setRoomsData = (data) => {
+    setRoomItems([
+      ...data,
+      {
+        id: -1,
+        name: "Toutes les pièces",
+      },
+    ]);
+  };
+  const setFurnituresData = (data) => {
+    setFurnitureItems([
+      ...data,
+      {
+        id: -1,
+        name: "Tous les meubles",
+      },
+    ]);
+  };
+  const searching = () => {
+    let allObjects = objects;
+    console.log("Tous les objets : ", allObjects);
+
+    const resultCategories = allObjects.filter((object) => {
+      if (actualCategory.id == -1 || actualCategory.id == object.id_category) {
+        return object;
+      }
+    });
+    const resultRooms = resultCategories.filter((object) => {
+      if (actualRoom.id == -1 || actualRoom.id == object.id_room) {
+        return object;
+      }
+    });
+    const resultFurnitures = resultRooms.filter((object) => {
+      if (
+        actualFurniture.id == -1 ||
+        actualFurniture.id == object.id_furniture
+      ) {
+        return object;
+      }
+    });
+    const result = resultFurnitures.filter((object) => {
+      const regex = new RegExp(`${searchWord}`, "gmi");
+      if (regex.test(object.name) == true) {
+        return object;
+      }
+    });
+    console.log("résultat : ", result);
+    setResults(result);
+  };
+
   const Result = (
     <Box>
       {results.map((result, i) => (
-        <Text key={i}>{result.name}</Text>
+        <Box key={i + result.name}>
+          <Text>{result.name}</Text>
+          <Text>{result.category_name}</Text>
+        </Box>
       ))}
     </Box>
   );
-  const addObject = async () => {
-    const database = await db.openDatabase();
-    database.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO object (name, id_room, id_category, id_furniture, id_state) VALUES ('Fond de teint', 1, 1, 3, 3)",
-        []
-      );
-    });
-  };
-  let [categories, setCategories] = useState([{ id: 0, name: "" }]);
-  let [rooms, setRooms] = useState([{ id: 0, name: "" }]);
-  let [furnitures, setFurnitures] = useState([{ id: 0, name: "" }]);
-  const allOptions = async () => {
-    const database = await db.openDatabase();
-
-    database.transaction((tx) => {
-      tx.executeSql(
-        "SELECT id, name FROM category",
-        [],
-        (_, { insertID, rows }) => {
-          let categories = [];
-          rows._array.map((i) => {
-            let oneCategory = { id: i.id, name: i.name };
-            categories.push(oneCategory);
-          });
-          setCategories(categories);
-        }
-      );
-      tx.executeSql(
-        "SELECT id, name FROM furniture",
-        [],
-        (_, { insertID, rows }) => {
-          let furnitures = [];
-          rows._array.map((i) => {
-            let oneFurniture = { id: i.id, name: i.name };
-            furnitures.push(oneFurniture);
-          });
-          setFurnitures(furnitures);
-        }
-      );
-      tx.executeSql(
-        "SELECT id, name FROM room",
-        [],
-        (_, { insertID, rows }) => {
-          let rooms = [];
-          rows._array.map((i) => {
-            let oneRoom = { id: i.id, name: i.name };
-            rooms.push(oneRoom);
-          });
-          setRooms(rooms);
-        }
-      );
-    });
-  };
-  useEffect(async () => {
-    allOptions();
-  }, []);
-
-  let [selectedRoom, setSelectedRoom] = useState("");
-  let [selectedCategory, setSelectedCategory] = useState("");
-  let [selectedFurniture, setSelectedFurniture] = useState("");
-  let [inputSearch, setInputSearch] = useState("");
 
   return (
     <View>
-      <Select
-        selectedValue={selectedCategory}
-        minWidth="200"
-        accessibilityLabel="Choose Service"
-        placeholder="CATÉGORIE"
-        mt={1}
-        onValueChange={(itemValue) => setSelectedCategory(itemValue)}
-      >
-        {categories.map((c, i) => (
-          <Select.Item key={i} label={c.name} value={c.id} />
-        ))}
-      </Select>
-      <Select
-        selectedValue={selectedRoom}
-        minWidth="200"
-        accessibilityLabel="Choose Service"
-        placeholder="PiÈCE"
-        mt={1}
-        onValueChange={(itemValue) => setSelectedRoom(itemValue)}
-      >
-        {rooms.map((c, i) => (
-          <Select.Item key={i} label={c.name} value={c.id} />
-        ))}
-      </Select>
-      <Select
-        selectedValue={selectedFurniture}
-        minWidth="200"
-        accessibilityLabel="Choose Service"
-        placeholder="Meuble"
-        mt={1}
-        onValueChange={(itemValue) => setSelectedFurniture(itemValue)}
-      >
-        {furnitures.map((c, i) => (
-          <Select.Item key={i} label={c.name} value={c.id} />
-        ))}
-      </Select>
+      <SelectItems
+        listName={"Catégories"}
+        chosenValue={actualCategory}
+        setChosenValue={setActualCategory}
+        items={categoryItems}
+      />
+      <SelectItems
+        listName={"Pièces"}
+        chosenValue={actualRoom}
+        setChosenValue={setActualRoom}
+        items={roomItems}
+      />
+      <SelectItems
+        listName={"Meubles"}
+        chosenValue={actualFurniture}
+        setChosenValue={setActualFurniture}
+        items={furnituresItems}
+      />
       <Input
         width="80%"
         placeholder="Rechercher un objet..."
@@ -147,7 +132,6 @@ export default () => {
       />
       <Button onPress={searching}>Rechercher</Button>
       {Result}
-      {/* <Button onPress={addObject}></Button> */}
     </View>
   );
 };
