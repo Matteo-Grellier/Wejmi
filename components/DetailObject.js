@@ -3,9 +3,9 @@ import { ModifyState, openDatabase } from '../database/dataProcess';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'; 
 import SelectState from './SelectState';
 
-const DetailObject = ({key, navigation, name,state_id, room, category,id, furniture, img }) => {
+const DetailObject = ({key, navigation, name,state_id, room, category,id, state,furniture, img }) => {
     console.log(id + " " + "id");
-    const [state, setState] = useState();
+    const [newState, setState] = useState("");
     
     async function  ModifyState(id, state_id){
         console.log("test");
@@ -13,10 +13,10 @@ const DetailObject = ({key, navigation, name,state_id, room, category,id, furnit
         db.transaction((tx) => {
             tx.executeSql("UPDATE object SET id_state = ? WHERE id = ?", [state_id, id ] );
             // Select object table and print it in console
-            tx.executeSql("SELECT object.name, object.id_state as state_id ,object.id as id ,furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id", [], (_, {insertID, rows}) => {
-                console.log(rows._array);
-                // return rows
-            });
+            // tx.executeSql("SELECT object.name, object.id_state as state_id ,object.id as id ,furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id", [], (_, {insertID, rows}) => {
+            //     console.log(rows._array);
+            //     // return rows
+            // });
 
         })
     }

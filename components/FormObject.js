@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from "react-native";
 import {Button, Alert, Box, Fab, Icon, Select } from 'native-base';
 import { AntDesign, MaterialIcons } from "react-native-vector-icons";
@@ -10,6 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SelectItems from "../components/SelectItems.js";
 import SelectState from "../components/SelectState.js";
 import InputItem from "../components/Input.js";
+import {GetAllCategory, GetAllFurniture, GetAllRoom} from "../database/dataProcess.js";
 
 export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state, processData}) => {
 
@@ -20,26 +21,36 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
     const [actualFurniture, setActualFurniture] = useState(chosenFurniture);
     const [actualState, setActualState] = useState(state);
 
-    //Donnée "fictive" (en attente de faire fonctionné via les props + BDD)
     const categoryName = "Catégorie";
     const roomName = "Pièce";
     const furnitureName = "Meuble";
 
-    const categoryItems = [
-        "Objets", 
-        "Makeup", 
-        "Papiers"
-    ];
-    const roomItems = [
-        "Chambre",
-        "Cuisine",
-        "Bureau"
-    ];
-    const furnituresItems = [
-        "Tiroir du bureau",
-        "Armoire",
-        "Commode"
-    ];
+    const [categoryItems, setCategoryItems] = useState([]);
+    const [roomItems, setRoomItems] = useState([]);
+    const [furnituresItems, setFurnitureItems] = useState([]);
+
+    useEffect(() => {
+        GetAllCategory(setCategoryItems);
+        GetAllRoom(setRoomItems);
+        GetAllFurniture(setFurnitureItems);
+    }, [])
+
+    //Donnée "fictive" (en attente de faire fonctionner via les props + BDD)
+    // const categoryItems = [
+    //     "Objets", 
+    //     "Makeup", 
+    //     "Papiers"
+    // ];
+    // const roomItems = [
+    //     "Chambre",
+    //     "Cuisine",
+    //     "Bureau"
+    // ];
+    // const furnituresItems = [
+    //     "Tiroir du bureau",
+    //     "Armoire",
+    //     "Commode"
+    // ];
 
     const putCacheImageToDirectory = async (imageURI) => {
 
@@ -119,12 +130,12 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
     const changeData = () => {
         //mettreDansLaBDD()
         const newData = {
-            name: nameOfObject, 
-            category: actualCategory, 
-            room: actualRoom, 
-            furniture: actualFurniture, 
+            name: inputName, 
+            categoryID: actualCategory.id, 
+            roomID: actualRoom.id, 
+            furnitureID: actualFurniture.id, 
             imageUri: image, 
-            state: actualState
+            stateID: actualState.id,
         }
         
         processData(newData);
@@ -139,9 +150,9 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
             {
                 displayingState()
             }            
-            <SelectItems style={styles.selectItems} listName={categoryName} chosenValue={chosenCategory} setChosenValue={setActualCategory} items={categoryItems}/>
-            <SelectItems style={styles.selectItems} listName={roomName} chosenValue={chosenRoom} setChosenValue={setActualRoom} items={roomItems}/>
-            <SelectItems style={styles.selectItems} listName={furnitureName} chosenValue={chosenFurniture} setChosenValue={setActualFurniture} items={furnituresItems}/>
+            <SelectItems style={styles.selectItems} listName={categoryName} chosenValue={actualCategory} setChosenValue={setActualCategory} items={categoryItems}/>
+            <SelectItems style={styles.selectItems} listName={roomName} chosenValue={actualRoom} setChosenValue={setActualRoom} items={roomItems}/>
+            <SelectItems style={styles.selectItems} listName={furnitureName} chosenValue={actualFurniture} setChosenValue={setActualFurniture} items={furnituresItems}/>
             <Box style={styles.imageBox}>
                 <Fab style={styles.fabButton} renderInPortal={false} shadow={5} placement={"bottom-left"} bottom={70} left={20} size="sm" 
                 icon={<Icon color="black" as={MaterialIcons} name="photo-camera" size="sm" />} 

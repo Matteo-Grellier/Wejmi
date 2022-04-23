@@ -66,7 +66,6 @@ export default ({ navigation }) => {
 								furniture={value.furniture}
 								img={value.photo_uri} 
 						></DetailObject>
-						
 					))
 				}
 			</ScrollView>
