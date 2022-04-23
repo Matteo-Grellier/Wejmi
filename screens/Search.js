@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import { Box, Button, Select } from "native-base";
+import { Box, Button } from "native-base";
 import Input from "../components/Input";
 import { useState, useEffect } from "react";
 import * as db from "../database/dataProcess";
-import SelectItems from "../components/SelectItems";
+import Select from "../components/utils/Select";
 
 export default () => {
   const [searchWord, setSearch] = useState("");
@@ -61,7 +61,6 @@ export default () => {
   };
   const searching = () => {
     let allObjects = objects;
-    console.log("Tous les objets : ", allObjects);
 
     const resultCategories = allObjects.filter((object) => {
       if (actualCategory.id == -1 || actualCategory.id == object.id_category) {
@@ -87,7 +86,6 @@ export default () => {
         return object;
       }
     });
-    console.log("résultat : ", result);
     setResults(result);
   };
 
@@ -104,25 +102,8 @@ export default () => {
 
   return (
     <View>
-      <SelectItems
-        listName={"Catégories"}
-        chosenValue={actualCategory}
-        setChosenValue={setActualCategory}
-        items={categoryItems}
-      />
-      <SelectItems
-        listName={"Pièces"}
-        chosenValue={actualRoom}
-        setChosenValue={setActualRoom}
-        items={roomItems}
-      />
-      <SelectItems
-        listName={"Meubles"}
-        chosenValue={actualFurniture}
-        setChosenValue={setActualFurniture}
-        items={furnituresItems}
-      />
       <Input
+        mt={3}
         width="80%"
         placeholder="Rechercher un objet..."
         value={searchWord}
@@ -130,6 +111,36 @@ export default () => {
           setSearch(text);
         }}
       />
+      <Box flexDirection="row" justifyContent="space-between" mb={3}>
+        <Select
+          placeholder={"Catégories"}
+          selectedValue={actualCategory.id}
+          accessibilityLabel={actualCategory.name}
+          setChosenValue={setActualCategory}
+          items={categoryItems}
+          width="120"
+          fontSize="10"
+        />
+        <Select
+          placeholder={"Pièces"}
+          selectedValue={actualRoom.id}
+          accessibilityLabel={actualRoom.name}
+          setChosenValue={setActualRoom}
+          items={roomItems}
+          width="120"
+          fontSize="10"
+        />
+        <Select
+          placeholder={"Meubles"}
+          selectedValue={actualFurniture.id}
+          accessibilityLabel={actualFurniture.name}
+          setChosenValue={setActualFurniture}
+          items={furnituresItems}
+          width="120"
+          fontSize="10"
+        />
+      </Box>
+
       <Button onPress={searching}>Rechercher</Button>
       {Result}
     </View>
