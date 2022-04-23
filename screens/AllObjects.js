@@ -40,6 +40,13 @@ export default ({ navigation }) => {
       >
         BDD
       </Button>
+      <Button
+        onPress={() => {
+          navigation.navigate("search");
+        }}
+      >
+        Search
+      </Button>
     </View>
   );
 };
