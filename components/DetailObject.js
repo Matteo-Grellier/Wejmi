@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   descriptions: {
     fontWeight: "bold",
     top: "-5%",
-    fontSize: 16,
+    fontSize: 17,
     right: 20,
     marginBottom: "10%",
   },

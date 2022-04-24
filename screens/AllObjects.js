@@ -23,18 +23,26 @@ import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
 
+import {useIsFocused } from "@react-navigation/native";
+
 export default ({ navigation }) => {
   const [object, setObject] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchWord, setSearch] = useState("");
   const [results, setResults] = useState([]);
 
+  const isFocused = useIsFocused(); //useIsFocused retourne un booléen : true si on est sur le screen, false autrement
+
   useEffect(() => {
-    GetAllCategory(setCategoriesData);
-    GetAllRoom(setRoomsData);
-    GetAllFurniture(setFurnituresData);
-    GetAllObject(setAllObjects);
-  }, []);
+    if(isFocused) { //Si on est sur ce screen là, alors on peut charger les données.
+      setIsLoaded(false);
+      GetAllCategory(setCategoriesData);
+      GetAllRoom(setRoomsData);
+      GetAllFurniture(setFurnituresData);
+      GetAllObject(setAllObjects);
+      console.log("change isFocused");
+    }
+  }, [isFocused]); //A chaque fois que la valeur isFocused change, on recharge les valeurs...
 
   const setAllObjects = (data) => {
     setObject(data);
