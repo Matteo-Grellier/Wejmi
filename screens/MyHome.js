@@ -1,5 +1,4 @@
-import { ScrollView, Text } from "react-native";
-import ItemOption from "../components/ItemOption";
+import { ScrollView } from "react-native";
 import ListOptions from "../components/ListOptions";
 
 export default () => {

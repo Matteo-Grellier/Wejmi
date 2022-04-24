@@ -9,9 +9,8 @@ import {
   Icon,
   Select,
 } from "native-base";
-import { AntDesign, MaterialIcons } from "react-native-vector-icons";
+import { MaterialIcons } from "react-native-vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import * as FileSystem from "expo-file-system"; //Pour une gestion dans les fichiers système de l'application
 import * as MediaLibrary from "expo-media-library"; //Pour une gestion dans les galleries d'image d'un utilisateur.
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

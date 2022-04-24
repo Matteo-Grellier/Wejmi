@@ -5,11 +5,7 @@ import AddObject from "./screens/AddObject";
 import Doge from "./screens/Doge";
 import MyHome from "./screens/MyHome";
 import { NativeBaseProvider, IconButton, Pressable } from "native-base";
-import {
-  AntDesign,
-  MaterialIcons,
-  FontAwesome,
-} from "react-native-vector-icons";
+import { FontAwesome } from "react-native-vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 

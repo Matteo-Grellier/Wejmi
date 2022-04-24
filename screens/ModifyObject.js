@@ -1,15 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Skeleton, Spinner } from "native-base";
 import FormObject from "../components/FormObject.js";
 import { useState, useEffect } from "react";
 
-import {
-  GetObject,
-  GetCategory,
-  GetFurniture,
-  GetRoom,
-  ModifyObject,
-} from "../database/dataProcess";
+import { GetObject, ModifyObject } from "../database/dataProcess";
 
 export default ({ route, navigation }) => {
   const { id } = route.params;

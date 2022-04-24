@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from "react";
-import { ModifyState, openDatabase } from "../database/dataProcess";
+import { React, useState } from "react";
+import { openDatabase } from "../database/dataProcess";
 import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import { Box } from "native-base";
 import SelectState from "./SelectState";
@@ -7,7 +7,6 @@ import SelectState from "./SelectState";
 const DetailObject = ({
   navigation,
   name,
-  state_id,
   room,
   category,
   id,

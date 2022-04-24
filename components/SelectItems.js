@@ -1,6 +1,5 @@
 import { Select, CheckIcon } from "native-base";
 import { View, StyleSheet, Text } from "react-native";
-import { useState } from "react";
 
 export default ({ listName, chosenValue, setChosenValue, items }) => {
   const changeActualChosenValue = (itemID) => {

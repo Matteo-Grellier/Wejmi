@@ -17,7 +17,7 @@ import {
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { React, useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
 

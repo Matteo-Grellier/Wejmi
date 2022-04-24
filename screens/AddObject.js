@@ -1,7 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
-import SelectItems from "../components/SelectItems.js";
+import { View, StyleSheet } from "react-native";
 import FormObject from "../components/FormObject.js";
-
 import { AddObject } from "../database/dataProcess";
 
 export default ({ navigation }) => {
