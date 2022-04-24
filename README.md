@@ -30,11 +30,6 @@ Toutes les données sont stockées sur une base de données en local sur le tél
 
 ## Lancer l'application
 
-### Lancer avec l'APK :
-
-
-
-
 ### Lancer avec Expo Go :
 
 Pour tester l'application avec Expo Go, il va falloir vous munir d'un ordinateur et d'un smartphone de votre choix (Android ou Apple).
@@ -66,6 +61,11 @@ expo start
 **Pour lancer l'application :**
 
 Une fois que le projet est lancé, un QR code apparaît dans le terminal, il suffit d'ouvrir *Expo Go* et de le scanner, après cela, l'application s'exécute sur votre téléphone.
+
+### Télécharger l'APK :
+
+
+
 
 
 ## Technologies
