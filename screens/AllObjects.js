@@ -34,7 +34,7 @@ export default ({ navigation }) => {
     GetAllRoom(setRoomsData);
     GetAllFurniture(setFurnituresData);
     GetAllObject(setAllObjects);
-  }, [results]);
+  }, []);
 
   const setAllObjects = (data) => {
     setObject(data);
@@ -147,7 +147,6 @@ export default ({ navigation }) => {
               setSearch(text);
             }}
           />
-          {/* Grosse latence lorsqu'on clique dessus */}
           <IconButton
             onPress={searching}
             icon={<Icon as={AntDesign} name="search1" />}
@@ -195,14 +194,6 @@ export default ({ navigation }) => {
             fontSize="10"
           />
         </Box>
-        {/* À supprimer quand l'icone de recherche fonctionnera */}
-        <Button
-          style={styles.validateButton}
-          borderRadius="20"
-          onPress={searching}
-        >
-          <Text style={styles.text}>Rechercher</Text>
-        </Button>
       </View>
       <Fab
         bottom={30}
