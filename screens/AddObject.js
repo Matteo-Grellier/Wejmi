@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import SelectItems from "../components/SelectItems.js";
 import FormObject from "../components/FormObject.js";
-import BDD from "./BDD.js";
 
 import { AddObject } from "../database/dataProcess";
 

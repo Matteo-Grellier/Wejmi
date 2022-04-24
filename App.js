@@ -4,8 +4,6 @@ import ModifyObject from "./screens/ModifyObject";
 import AddObject from "./screens/AddObject";
 import Doge from "./screens/Doge";
 import MyHome from "./screens/MyHome";
-import BDD from "./screens/BDD";
-import Search from "./screens/Search";
 import { NativeBaseProvider, IconButton, Pressable } from "native-base";
 import {
   AntDesign,
@@ -79,12 +77,6 @@ export default function App() {
             component={Doge}
             options={{ headerStyle: { backgroundColor: "#00FFC2" } }}
           ></Screen>
-          <Screen
-            name="bdd"
-            component={BDD}
-            options={{ headerStyle: { backgroundColor: "#00FFC2" } }}
-          ></Screen>
-          <Screen name="search" component={Search}></Screen>
         </Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

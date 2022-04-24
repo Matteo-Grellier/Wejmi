@@ -20,7 +20,6 @@ import { React, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
-import Search from "./Search";
 
 export default ({ navigation }) => {
   const [object, setObject] = useState([]);
