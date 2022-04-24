@@ -103,10 +103,10 @@ export default ({ optionTab }) => {
   //Composant qui affiche les options
   const Options = (
     <ScrollView marginTop={10}>
-      {allOptions.map((option) => (
+      {allOptions.map((option, index) => (
         <ItemOption
           text={option.name}
-          key={option.id}
+          key={index}
           deleteOption={() => {
             deleteOneOption(option.id);
           }}
