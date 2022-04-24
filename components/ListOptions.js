@@ -7,22 +7,6 @@ import Input from "./Input";
 import * as db from "../database/dataProcess";
 
 export default ({ optionTab }) => {
-  //Récupération des données
-  const allData = async () => {
-    const database = await db.openDatabase();
-    const request = "SELECT id, name FROM " + optionTab;
-    database.transaction((tx) => {
-      tx.executeSql(request, [], (_, { insertID, rows }) => {
-        let results = [];
-        rows._array.map((i) => {
-          let oneOption = { id: i.id, name: i.name };
-          results.push(oneOption);
-        });
-        setOptions(results);
-      });
-    });
-  };
-
   //useStates pour : toutes les options, une nouvelle option, montrer les options
   const [allOptions, setOptions] = useState([{ id: 0, name: "" }]);
   const [newOption, setNewOption] = useState("");
@@ -30,12 +14,29 @@ export default ({ optionTab }) => {
 
   //Mise à jour des options avec un useEffect
   useEffect(async () => {
-    allData();
+    switch (optionTab) {
+      case "category":
+        db.GetAllCategory(setOptionsData);
+        break;
+      case "room":
+        db.GetAllRoom(setOptionsData);
+        break;
+      case "furniture":
+        db.GetAllFurniture(setOptionsData);
+        break;
+    }
   }, [allOptions]);
-  const ShowOptions = () => {
-    isShown ? setShown(false) : setShown(true);
-  };
 
+  const setOptionsData = (data) => {
+    let results = [];
+    if (data.length > 0) {
+      data.map((item) => {
+        let oneOption = { id: item.id, name: item.name };
+        results.push(oneOption);
+      });
+    }
+    setOptions(results);
+  };
   //Affichage des titres des options (catégories | meubles | pièces)
   let placeholderInput = "";
   let title = "";
@@ -62,59 +63,50 @@ export default ({ optionTab }) => {
         foundOne = true;
       }
     });
-    if (!foundOne) {
-      const database = await db.openDatabase();
-      database.transaction((tx) => {
-        switch (optionTab) {
-          case "category":
-            tx.executeSql("INSERT INTO category (name) VALUES (?);", [
-              newOption,
-            ]);
-            break;
-          case "room":
-            tx.executeSql("INSERT INTO room (name) VALUES (?);", [newOption]);
-            break;
-          case "furniture":
-            tx.executeSql("INSERT INTO furniture (name) VALUES (?);", [
-              newOption,
-            ]);
-            break;
-        }
-
-        allData();
-      });
+    if (!foundOne && newOption !== "") {
+      switch (optionTab) {
+        case "category":
+          db.AddCategory(newOption);
+          break;
+        case "room":
+          db.AddRoom(newOption);
+          break;
+        case "furniture":
+          db.AddFurniture(newOption);
+          break;
+      }
       setNewOption("");
+    } else if (newOption == "") {
+      alert("Veuillez entrer une option");
     }
     setShown(true);
   };
 
   //Suppression d'une option
   const deleteOneOption = async (id) => {
-    const database = await db.openDatabase();
-
-    database.transaction((tx) => {
-      switch (optionTab) {
-        case "category":
-          tx.executeSql("DELETE FROM category WHERE id = ?", [id]);
-          break;
-        case "room":
-          tx.executeSql("DELETE FROM room WHERE id = ?", [id]);
-          break;
-        case "furniture":
-          tx.executeSql("DELETE FROM furniture WHERE id = ?", [id]);
-          break;
-      }
-    });
-    allData();
+    switch (optionTab) {
+      case "category":
+        db.DeleteCategory(id);
+        break;
+      case "room":
+        db.DeleteRoom(id);
+        break;
+      case "furniture":
+        db.DeleteFurniture(id);
+        break;
+    }
   };
 
+  const ShowOptions = () => {
+    isShown ? setShown(false) : setShown(true);
+  };
   //Composant qui affiche les options
   const Options = (
     <ScrollView marginTop={10}>
-      {allOptions.map((option) => (
+      {allOptions.map((option, index) => (
         <ItemOption
           text={option.name}
-          key={option.id}
+          key={index}
           deleteOption={() => {
             deleteOneOption(option.id);
           }}
@@ -126,23 +118,23 @@ export default ({ optionTab }) => {
   return (
     <View>
       <Pressable
+        p={2}
         onPress={ShowOptions}
         _pressed={{
-          bg: "orange.600:alpha.20",
+          bg: "#00FFC2",
         }}
+        flexDirection="row"
+        alignItems="center"
       >
-        <Heading>
-          <Icon
-            as={MaterialIcons}
-            name={
-              isShown === false ? "keyboard-arrow-right" : "keyboard-arrow-down"
-            }
-            alignItems="center"
-            justifyContent="center"
-            top="96"
-          />
-          {title}
-        </Heading>
+        <Icon
+          as={MaterialIcons}
+          name={
+            isShown === false ? "keyboard-arrow-right" : "keyboard-arrow-down"
+          }
+          alignItems="center"
+          justifyContent="center"
+        />
+        <Heading>{title}</Heading>
       </Pressable>
       {isShown === true ? Options : <></>}
       <KeyboardAvoidingView>

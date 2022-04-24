@@ -28,9 +28,9 @@ export default () => {
     db.GetAllCategory(setCategoriesData);
     db.GetAllRoom(setRoomsData);
     db.GetAllFurniture(setFurnituresData);
-    db.GetAllObject(setObjects);
+    // db.GetAllObject(setObjects);
 
-    setResults(objects);
+    // setResults(objects);
   }, []);
   const setCategoriesData = (data) => {
     setCategoryItems([
@@ -89,16 +89,16 @@ export default () => {
     setResults(result);
   };
 
-  const Result = (
-    <Box>
-      {results.map((result, i) => (
-        <Box key={i + result.name}>
-          <Text>{result.name}</Text>
-          <Text>{result.category_name}</Text>
-        </Box>
-      ))}
-    </Box>
-  );
+  // const Result = (
+  //   <Box>
+  //     {results.map((result, i) => (
+  //       <Box key={i + result.name}>
+  //         <Text>{result.name}</Text>
+  //         <Text>{result.category_name}</Text>
+  //       </Box>
+  //     ))}
+  //   </Box>
+  // );
 
   return (
     <View>
@@ -142,7 +142,7 @@ export default () => {
       </Box>
 
       <Button onPress={searching}>Rechercher</Button>
-      {Result}
+      {/* {Result} */}
     </View>
   );
 };
