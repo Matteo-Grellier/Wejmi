@@ -51,7 +51,13 @@ Il faut télécharger le code contenu dans ce repo, et installer *expo-cli* sur 
 npm install -g expo-cli
 ```
 
-Et lancez le projet avec la commande :
+Puis il faut lancer la commande :
+
+```
+npm install
+```
+
+Et lancer le projet avec la commande :
 
 ```
 expo start
