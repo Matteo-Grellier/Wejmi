@@ -97,7 +97,7 @@ Pour lancer l’application via le fichier APK, il faut :
 -----------------⚠️ ATTENTION ⚠️-----------------  
 L'application ne marche pas au lancement, il faut d'abord aller dans les options et revenir sur l'écran d'accueil  
 -----------------⚠️ ATTENTION ⚠️-----------------  
-5. L’installation est finie ! Il ne reste plus qu'à l'application !
+5. L’installation est finie ! Il ne reste plus qu'à utiliser l'application !
 
 
 ## Technologies
