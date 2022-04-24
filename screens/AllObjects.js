@@ -124,7 +124,7 @@ export default ({ navigation }) => {
   const loadingSpinner = <Spinner flex="1" size="lg" />;
 
   const allObjectsElements = (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.scrollView}>
       {results.map((value, index) => (
         <DetailObject
           key={index}
@@ -144,10 +144,9 @@ export default ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View >
         <Box flexDirection="row">
           <Input
-            mt={3}
             width="80%"
             placeholder="Rechercher un objet..."
             value={searchWord}
@@ -173,7 +172,7 @@ export default ({ navigation }) => {
             }}
           />
         </Box>
-        <Box flexDirection="row" justifyContent="space-between" mb={3}>
+        <Box flexDirection="row" justifyContent="space-around" mb={3}>
           <Select
             placeholder={"Catégories"}
             selectedValue={actualCategory.id}
@@ -228,9 +227,8 @@ const colors = {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginHorizontal: 20,
-    left: "3%",
     flexGrow: 1,
+    alignItems: "center",
   },
   container: {
     flex: 1,
