@@ -1,20 +1,32 @@
 # Wejmi
 
-Création d'une application Mobile permettant de renseigner des objets, de les modifier, supprimer et faire une recherche dans l'annuaire des objets entrés.
+Wejmi est une application Mobile qui a pour but de renseigner où sont rangés nos objets. 
 
-# 📜 Informations
+Elle  les modifier, supprimer et faire une recherche dans l'annuaire des objets entrés.
+
+# Informations :
 
 ## L'application
 
 L'application comporte 4 pages :
-_ Affichage des objets et du système de filtres
-_ Page Ma Maison avec l'ajout des catégories, pièces et meubles
-_ Page Modifier un objet
-_ Page Ajouter un objet
+- La page "Affichage" qui présente tout les objets, une barre de recherche et un système de filtre pour trier les objets.
+- La page "Ma Maison" qui permet l'ajout de catégories, de pièces et de meubles.
+- La page "Ajouter" qui permet d'entrer un nouvel objet, ainsi que l'endroit où il se trouve.
+- La page "Modifier" qui permet de modifier les informations d'un objet un objet.
+
+
+## Technologies
 
 ## Crédits
 
-Le jeu a été créé par la team Purpl'Studio👊 dans le cadre d'un projet scolaire.
-L'équipe est composé de : Mathéo LEGER, Mattéo GRELLIER, Louis BROCHARD et Olivia MOREAU.
+Cette application a été developpé par la team Purpl'Studio👊 dans le cadre d'un projet scolaire.
+
+L'équipe est composé de : 
+- Mathéo LEGER, 
+- Mattéo GRELLIER 
+- Olivia MOREAU
+- Louis BROCHARD
 
 # Lancer l'application
+
+pour lancer l'application il faudra 
