@@ -10,20 +10,34 @@ Avec Wejmi, il vous sera désormais impossible de perdre quoi que ce soit !
 
 ## Visuels :
 
+Ajouter une catégorie :
 
 
-https://user-images.githubusercontent.com/73283488/164987250-46c63f80-c54c-40e0-9c5c-d17a6f03428b.mp4
-
-
-
-https://user-images.githubusercontent.com/73283488/164987254-a9ecea06-87bd-4a4e-a7b7-447d33028e65.mp4
+https://user-images.githubusercontent.com/73283488/164987732-272dd773-c13c-48b8-9231-5842387f687b.mp4
 
 
 
-https://user-images.githubusercontent.com/73283488/164987255-c848c59e-3d96-48c3-b84f-1a21e016e4cf.mp4
+Ajouter un objet :
+
+https://user-images.githubusercontent.com/73283488/164987717-ed2db7d9-d152-4844-98b9-bfce26de3676.mp4
 
 
-https://user-images.githubusercontent.com/73283488/164987257-c9fbdba9-5015-4bcd-944b-f396398f37c5.mp4
+Modifier un objet :
+
+
+
+https://user-images.githubusercontent.com/73283488/164987768-35cddd66-8b06-44df-bb0a-b4ea9240619b.mp4
+
+
+
+
+Rechercher :
+
+
+
+https://user-images.githubusercontent.com/73283488/164987766-beaeb65d-4af2-4d28-a108-a5763e61633c.mp4
+
+
 
 
 
