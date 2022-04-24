@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { openDatabase } from "../database/dataProcess";
-import { Text, View, StyleSheet, Pressable, Image } from "react-native";
+import { Text, View, StyleSheet, Pressable, Image, Dimensions } from "react-native";
 import { Box } from "native-base";
 import SelectState from "./SelectState";
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   description: {
-    width: 160,
+    width: Dimensions.get('window').width/2.5,
     marginLeft: 20,
     flexWrap: "wrap",
     alignItems: "center",
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: 170,
-    height: 280,
+    width: Dimensions.get('window').width/2.5,
+    height: "85%",
     borderRadius: 10,
     flex: 1,
   },
