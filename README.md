@@ -28,9 +28,16 @@ Wejmi est disponible aux test sur les smartphonnes Apple et Android.
 
 Toutes les données sont stockées sur une base de données en local sur le téléphone et ne peuvent donc pas être transféré entre plusieurs appareils.
 
-# Tester l'application
+## Lancer l'application
 
-Pour tester l'application, il vas falloir vous munir d'un ordinateur et d'un smartphone de votre choix (Android ou Apple).
+# Lancer avec l'APK :
+
+
+
+
+# Lancer avec Expo Go :
+
+Pour tester l'application avec Expo Go, il vas falloir vous munir d'un ordinateur et d'un smartphone de votre choix (Android ou Apple).
 
 **Sur le téléphone :**
 
@@ -50,10 +57,10 @@ Et lancez le projet avec la commande :
 expo start
 ```
 
-
 **Pour lancer l'application :**
 
-Une fois uqe le 
+Une fois que le projet est lancé, un QR code apparait dans le terminal, il suffit d'ouvrir *Expo Go* et de le scanner, après cela, l'application s'execute sur votre téléphone.
+
 
 ## Technologies
 
