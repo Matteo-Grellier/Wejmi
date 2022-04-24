@@ -94,9 +94,9 @@ Pour lancer l’application via le fichier APK, il faut :
 1. Récupérer le fichier APK depuis teams ou depuis ce [lien WeTransfer](https://we.tl/t-eSr0JORtLW)
 2. Le transférer vers son téléphone
 3. Installer l’application en allant chercher le fichier .apk  
------------------!!! ATTENTION !!!-----------------  
+-----------------⚠️ ATTENTION ⚠️-----------------  
 L'application ne marche pas au lancement, il faut d'abord aller dans les options et revenir sur l'écran d'accueil  
------------------!!! ATTENTION !!!-----------------  
+-----------------⚠️ ATTENTION ⚠️-----------------  
 5. L’installation est finie ! Il ne reste plus qu'à l'application !
 
 
