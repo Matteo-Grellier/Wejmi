@@ -8,16 +8,13 @@ De plus, Wejmi dispose d'une page "Ma Maison" permettant de rajouter ses propres
 
 Avec Wejmi, il vous sera désormais impossible de perdre quoi que ce soit !
 
-# Visuels :
+## Visuels :
 
 <img src="">
 
 <img src="">
 
 <img src="">
-
-# Informations :
-
 
 ## Description technique
 
