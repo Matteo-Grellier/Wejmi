@@ -116,25 +116,20 @@ export default ({ navigation }) => {
 
   const allObjectsElements = (
     <ScrollView style={styles.scrollView}>
-      {results.map(
-        (value, index) => (
-          console.log(value.state_name),
-          (
-            <DetailObject
-              key={index}
-              navigation={navigation}
-              id={value.id}
-              name={value.name}
-              room={value.room_name}
-              state_id={value.state_id}
-              category={value.category_name}
-              state_name={value.state_name}
-              furniture={value.furniture_name}
-              img={value.photo_uri}
-            ></DetailObject>
-          )
-        )
-      )}
+      {results.map((value, index) => (
+        <DetailObject
+          key={index}
+          navigation={navigation}
+          id={value.id}
+          name={value.name}
+          room={value.room_name}
+          state_id={value.state_id}
+          category={value.category_name}
+          state_name={value.state_name}
+          furniture={value.furniture_name}
+          img={value.photo_uri}
+        ></DetailObject>
+      ))}
     </ScrollView>
   );
 

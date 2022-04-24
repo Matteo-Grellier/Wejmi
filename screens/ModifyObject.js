@@ -41,8 +41,6 @@ export default ({ route, navigation }) => {
   };
 
   const processData = (newData) => {
-    console.log(newData);
-    console.log("hello world!");
     ModifyObject(
       id,
       newData.name,
