@@ -38,15 +38,22 @@ Il simplement faut télécharger l'application *Expo Go*
 
 **Sur l'ordinateur :**
 
-Il faut télécharger le code contenue dans ce repo, et 
+Il faut télécharger le code contenue dans ce repo, et installer *expo-cli* sur votre ordinateur grâce à la commande :
 
+```
 npm install -g expo-cli
+```
 
+Et lancez le projet avec la commande :
+
+```
 expo start
+```
+
 
 **Pour lancer l'application :**
 
-scanner qr code
+Une fois uqe le 
 
 ## Technologies
 
@@ -65,3 +72,9 @@ L'équipe est composé de :
 - Mattéo GRELLIER 
 - Olivia MOREAU
 - Louis BROCHARD
+
+Intervenant à la base du projet :
+
+- Julien Sosthene <3
+
+
