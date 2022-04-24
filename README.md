@@ -49,7 +49,7 @@ L'application Wejmi a été developpée avec du Javascript en utilisant React-Na
 Cette application a été developpé par la team Purpl'Studio👊 dans le cadre d'un projet scolaire.
 
 L'équipe est composé de : 
-- Mathéo LEGER, 
+- Mathéo LEGER
 - Mattéo GRELLIER 
 - Olivia MOREAU
 - Louis BROCHARD
