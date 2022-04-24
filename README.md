@@ -30,12 +30,12 @@ Toutes les données sont stockées sur une base de données en local sur le tél
 
 ## Lancer l'application
 
-# Lancer avec l'APK :
+### Lancer avec l'APK :
 
 
 
 
-# Lancer avec Expo Go :
+### Lancer avec Expo Go :
 
 Pour tester l'application avec Expo Go, il vas falloir vous munir d'un ordinateur et d'un smartphone de votre choix (Android ou Apple).
 
