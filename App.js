@@ -6,7 +6,7 @@ import Doge from "./screens/Doge";
 import MyHome from "./screens/MyHome";
 import BDD from "./screens/BDD";
 import Search from "./screens/Search";
-import { NativeBaseProvider, IconButton } from "native-base";
+import { NativeBaseProvider, IconButton, Pressable } from "native-base";
 import {
   AntDesign,
   MaterialIcons,
@@ -22,7 +22,12 @@ const { Navigator, Screen } = Stack;
 export default function App() {
   const Header = ({ navigation }) => {
     return (
-      <View style={styles.header}>
+      <Pressable
+        style={styles.header}
+        onLongPress={() => {
+          navigation.navigate("Doge");
+        }}
+      >
         <View style={styles.logoHeader}>
           <Image
             source={require("./assets/logo-test.png")}
@@ -38,7 +43,7 @@ export default function App() {
           marginRight="8"
           onPress={() => navigation.navigate("Ma Maison")}
         />
-      </View>
+      </Pressable>
     );
   };
 
