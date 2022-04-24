@@ -23,18 +23,26 @@ import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
 
+import {useIsFocused } from "@react-navigation/native";
+
 export default ({ navigation }) => {
   const [object, setObject] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchWord, setSearch] = useState("");
   const [results, setResults] = useState([]);
 
+  const isFocused = useIsFocused(); //useIsFocused retourne un booléen : true si on est sur le screen, false autrement
+
   useEffect(() => {
-    GetAllCategory(setCategoriesData);
-    GetAllRoom(setRoomsData);
-    GetAllFurniture(setFurnituresData);
-    GetAllObject(setAllObjects);
-  }, []);
+    if(isFocused) { //Si on est sur ce screen là, alors on peut charger les données.
+      setIsLoaded(false);
+      GetAllCategory(setCategoriesData);
+      GetAllRoom(setRoomsData);
+      GetAllFurniture(setFurnituresData);
+      GetAllObject(setAllObjects);
+      console.log("change isFocused");
+    }
+  }, [isFocused]); //A chaque fois que la valeur isFocused change, on recharge les valeurs...
 
   const setAllObjects = (data) => {
     setObject(data);
@@ -116,7 +124,7 @@ export default ({ navigation }) => {
   const loadingSpinner = <Spinner flex="1" size="lg" />;
 
   const allObjectsElements = (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.scrollView}>
       {results.map((value, index) => (
         <DetailObject
           key={index}
@@ -136,10 +144,9 @@ export default ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View >
         <Box flexDirection="row">
           <Input
-            mt={3}
             width="80%"
             placeholder="Rechercher un objet..."
             value={searchWord}
@@ -165,7 +172,7 @@ export default ({ navigation }) => {
             }}
           />
         </Box>
-        <Box flexDirection="row" justifyContent="space-between" mb={3}>
+        <Box flexDirection="row" justifyContent="space-around" mb={3}>
           <Select
             placeholder={"Catégories"}
             selectedValue={actualCategory.id}
@@ -220,9 +227,8 @@ const colors = {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginHorizontal: 20,
-    left: "3%",
     flexGrow: 1,
+    alignItems: "center",
   },
   container: {
     flex: 1,
