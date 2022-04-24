@@ -1,44 +1,42 @@
-import { View, Text, StyleSheet } from "react-native";
-import SelectItems from "../components/SelectItems.js"
+import { View, StyleSheet } from "react-native";
 import FormObject from "../components/FormObject.js";
-import BDD from "./BDD.js";
+import { AddObject } from "../database/dataProcess";
 
-import {AddObject} from "../database/dataProcess";
-
-export default ({navigation}) => {
-
-  const category = {id: null, name: null};
-  const room = {id: null, name: null};
-  const furniture = {id: null, name: null};
-  const state = {id: null, name: null};
+export default ({ navigation }) => {
+  const category = { id: null, name: null };
+  const room = { id: null, name: null };
+  const furniture = { id: null, name: null };
+  const state = { id: null, name: null };
 
   const processData = (newData) => {
-    console.log(newData);
-    console.log("hello world!")
-    AddObject(newData.name, newData.roomID, newData.categoryID, newData.furnitureID, newData.imageUri);
-  }
+    AddObject(
+      newData.name,
+      newData.roomID,
+      newData.categoryID,
+      newData.furnitureID,
+      newData.imageUri
+    );
+  };
 
-  const formObject = (<FormObject 
-    isCreatingForm={true}
-    nameOfObject={null}
-    chosenCategory={category}
-    chosenRoom={room}
-    chosenFurniture={furniture}
-    chosenPhoto={null}
-    state={state}
-    processData={processData}
-    navigation={navigation}
-    />)
-
-  return (
-    <View style={styles.container}>
-      {formObject}
-    </View>
+  const formObject = (
+    <FormObject
+      isCreatingForm={true}
+      nameOfObject={null}
+      chosenCategory={category}
+      chosenRoom={room}
+      chosenFurniture={furniture}
+      chosenPhoto={null}
+      state={state}
+      processData={processData}
+      navigation={navigation}
+    />
   );
+
+  return <View style={styles.container}>{formObject}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });

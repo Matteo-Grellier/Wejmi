@@ -6,7 +6,6 @@ export default (props) => {
       {...props}
       bg="#FFFFFF"
       width={props.width === undefined ? "100%" : props.width}
-      // onChangeText={props.onChangeText}
       margin="auto"
       marginBottom="2"
       px="3"
@@ -14,7 +13,6 @@ export default (props) => {
       alignItems="center"
       borderWidth="2"
       borderColor="#00FFC2"
-      // placeholder={props.placeholder}
     />
   );
 };

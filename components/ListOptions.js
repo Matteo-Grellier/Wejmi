@@ -100,6 +100,7 @@ export default ({ optionTab }) => {
   const ShowOptions = () => {
     isShown ? setShown(false) : setShown(true);
   };
+
   //Composant qui affiche les options
   const Options = (
     <ScrollView marginTop={10}>

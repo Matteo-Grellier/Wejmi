@@ -1,72 +1,52 @@
 import { Select, CheckIcon } from "native-base";
 import { View, StyleSheet, Text } from "react-native";
-import { useState } from "react";
 
-export default ({listName, chosenValue, setChosenValue, items}) => {
-    // const [chosenVal, setChosenVal] = useState(chosenValue);
+export default ({ listName, chosenValue, setChosenValue, items }) => {
+  const changeActualChosenValue = (itemID) => {
+    let newActualObj = items.find((item) => item.id === itemID);
+    setChosenValue(newActualObj);
+  };
 
-    // if(chosenValue === undefined) {
-    //     chosenValue = {id: null, name: ""};
-    // }
-
-    // let previousChosen;
-
-    const changeActualChosenValue = (itemID) => {
-        // console.log(chosenValue);
-        // previousChosen = chosenValue;
-        // if(item == previousChosen) {
-        //     console.log("is the same");
-        // }
-
-        // if(item.name === previousChosen.name) {
-        //     console.log("is the same name");
-        // }
-        
-        let newActualObj = items.find(item => item.id === itemID); 
-        console.log(chosenValue);
-        console.log(itemID);
-        // setChosenValue(newActualObj);
-        setChosenValue(newActualObj);
-    }
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{listName}</Text>
-            <Select borderColor={colors.mainGreenColor} fontSize={18} borderWidth={2} borderRadius={15} color={"black"} 
-            minWidth="200" 
-            selectedValue={chosenValue.id} 
-            accessibilityLabel={chosenValue.name} 
-            placeholder={listName}
-            _selectedItem={{
-                bg: "#00FFC2",
-                endIcon: <CheckIcon size="3" />
-            }} 
-            mt={1} 
-            onValueChange={itemValue => changeActualChosenValue(itemValue)}>
-                {
-                    items.map((item, index)=> (
-                        <Select.Item key={index} label={item.name} value={item.id}/>
-                    )) 
-                }
-                
-            </Select>
-        </View>
-    )
-}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{listName}</Text>
+      <Select
+        borderColor={colors.mainGreenColor}
+        fontSize={18}
+        borderWidth={2}
+        borderRadius={15}
+        color={"black"}
+        minWidth="200"
+        selectedValue={chosenValue.id}
+        accessibilityLabel={chosenValue.name}
+        placeholder={listName}
+        _selectedItem={{
+          bg: "#00FFC2",
+          endIcon: <CheckIcon size="3" />,
+        }}
+        mt={1}
+        onValueChange={(itemValue) => changeActualChosenValue(itemValue)}
+      >
+        {items.map((item, index) => (
+          <Select.Item key={index} label={item.name} value={item.id} />
+        ))}
+      </Select>
+    </View>
+  );
+};
 
 const colors = {
-    mainGreenColor: "#00FFC2",
-    darkGreenColor: "#2B9C81",
-    mainGreyColor: "#F3F3F3",
-    darkGreyColor: "#9C9C9C"
-
+  mainGreenColor: "#00FFC2",
+  darkGreenColor: "#2B9C81",
+  mainGreyColor: "#F3F3F3",
+  darkGreyColor: "#9C9C9C",
 };
 
 const styles = StyleSheet.create({
-    container: {
-        margin: 10,
-    },
-    text: {
-        marginLeft: 10,
-    }
+  container: {
+    margin: 10,
+  },
+  text: {
+    marginLeft: 10,
+  },
 });

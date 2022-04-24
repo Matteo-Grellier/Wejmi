@@ -4,14 +4,8 @@ import ModifyObject from "./screens/ModifyObject";
 import AddObject from "./screens/AddObject";
 import Doge from "./screens/Doge";
 import MyHome from "./screens/MyHome";
-import BDD from "./screens/BDD";
-import Search from "./screens/Search";
-import { NativeBaseProvider, IconButton } from "native-base";
-import {
-  AntDesign,
-  MaterialIcons,
-  FontAwesome,
-} from "react-native-vector-icons";
+import { NativeBaseProvider, IconButton, Pressable } from "native-base";
+import { FontAwesome } from "react-native-vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -22,7 +16,12 @@ const { Navigator, Screen } = Stack;
 export default function App() {
   const Header = ({ navigation }) => {
     return (
-      <View style={styles.header}>
+      <Pressable
+        style={styles.header}
+        onLongPress={() => {
+          navigation.navigate("Doge");
+        }}
+      >
         <View style={styles.logoHeader}>
           <Image
             source={require("./assets/logo-test.png")}
@@ -38,7 +37,7 @@ export default function App() {
           marginRight="8"
           onPress={() => navigation.navigate("Ma Maison")}
         />
-      </View>
+      </Pressable>
     );
   };
 
@@ -74,12 +73,6 @@ export default function App() {
             component={Doge}
             options={{ headerStyle: { backgroundColor: "#00FFC2" } }}
           ></Screen>
-          <Screen
-            name="bdd"
-            component={BDD}
-            options={{ headerStyle: { backgroundColor: "#00FFC2" } }}
-          ></Screen>
-          <Screen name="search" component={Search}></Screen>
         </Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

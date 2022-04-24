@@ -14,13 +14,14 @@ import {
   Spinner,
   Fab,
   Icon,
+  Text,
+  IconButton,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { React, useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailObject from "../components/DetailObject";
-import Search from "./Search";
 
 export default ({ navigation }) => {
   const [object, setObject] = useState([]);
@@ -33,7 +34,7 @@ export default ({ navigation }) => {
     GetAllRoom(setRoomsData);
     GetAllFurniture(setFurnituresData);
     GetAllObject(setAllObjects);
-  }, []);
+  }, [results]);
 
   const setAllObjects = (data) => {
     setObject(data);
@@ -116,40 +117,55 @@ export default ({ navigation }) => {
 
   const allObjectsElements = (
     <ScrollView style={styles.scrollView}>
-      {results.map(
-        (value, index) => (
-          console.log(value.state_name),
-          (
-            <DetailObject
-              key={index}
-              navigation={navigation}
-              id={value.id}
-              name={value.name}
-              room={value.room_name}
-              state_id={value.state_id}
-              category={value.category_name}
-              state_name={value.state_name}
-              furniture={value.furniture_name}
-              img={value.photo_uri}
-            ></DetailObject>
-          )
-        )
-      )}
+      {results.map((value, index) => (
+        <DetailObject
+          key={index}
+          navigation={navigation}
+          id={value.id}
+          name={value.name}
+          room={value.room_name}
+          state_id={value.state_id}
+          category={value.category_name}
+          state_name={value.state_name}
+          furniture={value.furniture_name}
+          img={value.photo_uri}
+        ></DetailObject>
+      ))}
     </ScrollView>
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Input
-          mt={3}
-          width="80%"
-          placeholder="Rechercher un objet..."
-          value={searchWord}
-          onChangeText={(text) => {
-            setSearch(text);
-          }}
-        />
+        <Box flexDirection="row">
+          <Input
+            mt={3}
+            width="80%"
+            placeholder="Rechercher un objet..."
+            value={searchWord}
+            onChangeText={(text) => {
+              setSearch(text);
+            }}
+          />
+          {/* Grosse latence lorsqu'on clique dessus */}
+          <IconButton
+            onPress={searching}
+            icon={<Icon as={AntDesign} name="search1" />}
+            borderRadius="full"
+            bg="#00FFC2"
+            _icon={{
+              color: "black",
+              size: "md",
+            }}
+            _pressed={{
+              bg: "black",
+              _icon: {
+                name: "search1",
+                color: "#00FFC2",
+              },
+            }}
+          />
+        </Box>
         <Box flexDirection="row" justifyContent="space-between" mb={3}>
           <Select
             placeholder={"Catégories"}
@@ -179,8 +195,14 @@ export default ({ navigation }) => {
             fontSize="10"
           />
         </Box>
-
-        <Button onPress={searching}>Rechercher</Button>
+        {/* À supprimer quand l'icone de recherche fonctionnera */}
+        <Button
+          style={styles.validateButton}
+          borderRadius="20"
+          onPress={searching}
+        >
+          <Text style={styles.text}>Rechercher</Text>
+        </Button>
       </View>
       <Fab
         bottom={30}
@@ -197,6 +219,13 @@ export default ({ navigation }) => {
     </SafeAreaView>
   );
 };
+const colors = {
+  mainGreenColor: "#00FFC2",
+  darkGreenColor: "#2B9C81",
+  mainGreyColor: "#F3F3F3",
+  darkGreyColor: "#9C9C9C",
+  darkRedColor: "#FF5C5C",
+};
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -207,5 +236,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
+  },
+  validateButton: {
+    backgroundColor: colors.mainGreenColor,
+    width: 130,
+    margin: 10,
+  },
+  text: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 18,
   },
 });
