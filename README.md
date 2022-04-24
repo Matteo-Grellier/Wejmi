@@ -40,11 +40,11 @@ Pour tester l'application, il faudra
 
 L'application Wejmi a été developpée avec du Javascript en utilisant React-Native. La base et le traitement des donénessont fait avec SQLite.
 
-<img src="https://user-images.githubusercontent.com/73283488/164979211-952111db-497e-4b0a-9359-a408029dd466.png" width="50" height="50">
+<img src="https://user-images.githubusercontent.com/73283488/164979211-952111db-497e-4b0a-9359-a408029dd466.png" width="120" height="100">
 
-<img src="https://user-images.githubusercontent.com/73283488/164979233-6863ab9f-cc69-4aee-b46f-e9f1257434bb.png" width="50" height="50">
+<img src="https://user-images.githubusercontent.com/73283488/164979233-6863ab9f-cc69-4aee-b46f-e9f1257434bb.png" width="100" height="100">
 
-<img src="https://user-images.githubusercontent.com/73283488/164979247-3b52cf63-1804-4e6f-a2f2-7f4f5fa4728d.jpg" width="50" height="50">
+<img src="https://user-images.githubusercontent.com/73283488/164979247-3b52cf63-1804-4e6f-a2f2-7f4f5fa4728d.jpg" width="100" height="100">
 
 
 ## Crédits
