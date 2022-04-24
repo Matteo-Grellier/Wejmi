@@ -241,7 +241,6 @@ export default ({
         items={roomItems}
       />
       <SelectItems
-        style={styles.selectItems}
         listName={furnitureName}
         chosenValue={actualFurniture}
         setChosenValue={setActualFurniture}
@@ -305,11 +304,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     marginTop: 20,
-    // justifyContent: "center",
-    // flex: 1,
-  },
-  selectItems: {
-    // margin: 50,
   },
   imageBox: {
     borderRadius: 20,
