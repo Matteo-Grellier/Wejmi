@@ -53,9 +53,9 @@ const DetailObject = ({
       >
         <View style={styles.description}>
           <Text style={styles.objets}>{name}</Text>
-          <Text style={styles.pièceTitre}>Pièce</Text>
+          <Text style={styles.pièceTitre}>PIÈCE</Text>
           <Text style={styles.pièce}>{category}</Text>
-          <Text style={styles.meubleTitre}>Meuble</Text>
+          <Text style={styles.meubleTitre}>MEUBLE</Text>
           <Text style={styles.meuble}>{furniture}</Text>
           <View style={styles.selectBox}>
             <SelectState
@@ -104,25 +104,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     right: 20,
     top: "-5%",
-    fontSize: 15,
+    fontSize: 12,
     color: "#535353",
   },
   pièce: {
     fontWeight: "bold",
     top: "-5%",
-    fontSize: 20,
+    fontSize: 18,
     right: 20,
     marginBottom: "2%",
   },
   meubleTitre: {
     right: 20,
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 12,
     color: "#535353",
   },
   meuble: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 18,
     right: 20,
   },
   image: {

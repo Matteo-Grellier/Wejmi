@@ -1,5 +1,5 @@
 import { GetAllObject } from "../database/dataProcess.js";
-import { Button, ScrollView, StatusBar } from "native-base";
+import { Button, ScrollView, StatusBar, Spinner } from "native-base";
 import openDatabase from "../database/dataProcess.js";
 import { React, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
@@ -8,10 +8,38 @@ import DetailObject from "../components/DetailObject";
 
 export default ({ navigation }) => {
   const [object, setObject] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    GetAllObject(setObject);
-  }, [object]);
+    GetAllObject(setAllObjects);
+    console.log("hello")
+  }, []);
+
+  const setAllObjects = (data) => {
+    setObject(data);
+    setIsLoaded(true);
+  }
+
+  const loadingSpinner = <Spinner flex="1" size="lg" />;
+
+  const allObjectsElements = (
+      <ScrollView style={styles.scrollView}>
+      {object.map((value, index) => (
+        <DetailObject
+          key={index}
+          navigation={navigation}
+          id={value.id}
+          name={value.name}
+          room={value.room_name}
+          state_id={value.state_id}
+          category={value.category_name}
+          state={value.state_name}
+          furniture={value.furniture_name}
+          img={value.photo_uri}
+        ></DetailObject>
+      ))}
+    </ScrollView>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,22 +73,7 @@ export default ({ navigation }) => {
         DOGE
       </Button>
 
-      <ScrollView style={styles.scrollView}>
-        {object.map((value, index) => (
-          <DetailObject
-            key={index}
-            navigation={navigation}
-            id={value.id}
-            name={value.name}
-            room={value.room}
-            state_id={value.state_id}
-            category={value.category}
-            state={value.state}
-            furniture={value.furniture}
-            img={value.photo_uri}
-          ></DetailObject>
-        ))}
-      </ScrollView>
+        { (isLoaded) ?  allObjectsElements : loadingSpinner }
     </SafeAreaView>
   );
 };
