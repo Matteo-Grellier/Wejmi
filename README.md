@@ -30,8 +30,23 @@ Toutes les données sont stockées sur une base de données en local sur le tél
 
 # Tester l'application
 
-Pour tester l'application, il faudra
+Pour tester l'application, il vas falloir vous munir d'un ordinateur et d'un smartphone de votre choix (Android ou Apple).
 
+**Sur le téléphone :**
+
+Il simplement faut télécharger l'application *Expo Go*
+
+**Sur l'ordinateur :**
+
+Il faut télécharger le code contenue dans ce repo, et 
+
+npm install -g expo-cli
+
+expo start
+
+**Pour lancer l'application :**
+
+scanner qr code
 
 ## Technologies
 
