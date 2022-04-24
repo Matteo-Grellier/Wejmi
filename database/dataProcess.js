@@ -31,7 +31,7 @@ export async function openDatabase() {
 export async function GetAllObject(setData) {
   const db = await openDatabase();
   const selectRequest =
-    "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
+    "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id ORDER BY object.name";
   db.transaction((tx) => {
     tx.executeSql(selectRequest, [], (_, { insertID, rows }) => {
       setData(rows._array);
