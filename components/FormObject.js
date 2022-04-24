@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from "react-native";
-import {Button, Alert, Box, Fab, Icon, Select } from 'native-base';
+import {Button, Alert, AlertDialog, Box, Fab, Icon, Select } from 'native-base';
 import { AntDesign, MaterialIcons } from "react-native-vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'; //Pour une gestion dans les fichiers système de l'application
@@ -10,8 +10,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SelectItems from "../components/SelectItems.js";
 import SelectState from "../components/SelectState.js";
 import InputItem from "../components/Input.js";
+import {GetAllCategory, GetAllFurniture, GetAllRoom, DeleteObject} from "../database/dataProcess.js";
 
-export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state, processData}) => {
+export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chosenFurniture, chosenPhoto, state, processData, idOfObject, navigation}) => {
+
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const [image, setImage] = useState(chosenPhoto);
     const [inputName, setInputName] = useState(nameOfObject);
@@ -20,26 +23,19 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
     const [actualFurniture, setActualFurniture] = useState(chosenFurniture);
     const [actualState, setActualState] = useState(state);
 
-    //Donnée "fictive" (en attente de faire fonctionné via les props + BDD)
     const categoryName = "Catégorie";
     const roomName = "Pièce";
     const furnitureName = "Meuble";
 
-    const categoryItems = [
-        "Objets", 
-        "Makeup", 
-        "Papiers"
-    ];
-    const roomItems = [
-        "Chambre",
-        "Cuisine",
-        "Bureau"
-    ];
-    const furnituresItems = [
-        "Tiroir du bureau",
-        "Armoire",
-        "Commode"
-    ];
+    const [categoryItems, setCategoryItems] = useState([]);
+    const [roomItems, setRoomItems] = useState([]);
+    const [furnituresItems, setFurnitureItems] = useState([]);
+
+    useEffect(() => {
+        GetAllCategory(setCategoryItems);
+        GetAllRoom(setRoomItems);
+        GetAllFurniture(setFurnitureItems);
+    }, [])
 
     const putCacheImageToDirectory = async (imageURI) => {
 
@@ -71,7 +67,7 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
 
     //Prendre une image depuis les fichiers du téléphone
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
+        // On récupère une image de la librairie
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
           allowsEditing: true,
@@ -96,7 +92,7 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
             let data =  await ImagePicker.launchCameraAsync({
                 mediaTypes:ImagePicker.MediaTypeOptions.Images,
                 allowsEditing:true,
-                aspect:[1,1],
+                aspect:[4, 3],
                 quality:1
             })
             if(!data.cancelled){
@@ -108,40 +104,78 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
         }
     }
 
-    const displayingState = () => {
-        if (isCreatingForm) {
-            return;
-        } else {
-            return (<SelectState chosenState={actualState} setChosenState={setActualState}/>);
-        }
-    }
-
-    const changeData = () => {
+    const newDataProcess = () => {
         //mettreDansLaBDD()
         const newData = {
-            name: nameOfObject, 
-            category: actualCategory, 
-            room: actualRoom, 
-            furniture: actualFurniture, 
+            name: inputName, 
+            categoryID: actualCategory.id, 
+            roomID: actualRoom.id, 
+            furnitureID: actualFurniture.id, 
             imageUri: image, 
-            state: actualState
+            stateID: actualState.id,
         }
         
         processData(newData);
+        navigation.goBack();
     }
+
+    const deleteData = () => {
+        console.log("coucou");
+        DeleteObject(idOfObject);
+        navigation.goBack();
+    }
+
+    const modifyButtons = (
+        <View flexDirection="row">
+            <Button style={styles.deleteButton} borderRadius="30" onPress={() => {setIsDeleting(true)}}>
+                <Text style={styles.text}>Supprimer</Text>
+            </Button>
+            <Button style={styles.validateButton} borderRadius="30" onPress={() => newDataProcess()}>
+                <Text style={styles.text}>Modifier</Text>
+            </Button>
+        </View>
+    );
+
+    const addButtons = (
+        <Button style={styles.validateButton} borderRadius="20" onPress={() => newDataProcess()}>
+            <Text style={styles.text}>Ajouter</Text>
+        </Button>
+    )
+
+    const AlertDelete = (
+        <AlertDialog isOpen={isDeleting} onClose={() => setIsDeleting(false)}>
+            <AlertDialog.Content>
+                <AlertDialog.CloseButton />
+                <AlertDialog.Header style={{backgroundColor: colors.mainGreenColor}}>Supprimer l'objet</AlertDialog.Header>
+                <AlertDialog.Body>
+                    Voulez vous vraiment supprimer l'object actuel ?
+                </AlertDialog.Body>
+                <AlertDialog.Footer>
+                    <Button.Group space={2}>
+                    <Button variant="unstyled" onPress={() => setIsDeleting(false)}>
+                        Annuler
+                    </Button>
+                    <Button style={{backgroundColor: colors.darkRedColor}} onPress={() => {setIsDeleting(false); deleteData()}}>
+                        Supprimer
+                    </Button>
+                    </Button.Group>
+                </AlertDialog.Footer>
+            </AlertDialog.Content>
+        </AlertDialog>
+    );
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-
+            {AlertDelete}
             <InputItem width={300} value={inputName} placeholder={"Nom"} 
             onChangeText={(newName) => setInputName(newName)}
             />
             {
-                displayingState()
+                (isCreatingForm) ? <></> : <SelectState chosenState={actualState} setChosenState={setActualState}/>
             }            
-            <SelectItems style={styles.selectItems} listName={categoryName} chosenValue={chosenCategory} setChosenValue={setActualCategory} items={categoryItems}/>
-            <SelectItems style={styles.selectItems} listName={roomName} chosenValue={chosenRoom} setChosenValue={setActualRoom} items={roomItems}/>
-            <SelectItems style={styles.selectItems} listName={furnitureName} chosenValue={chosenFurniture} setChosenValue={setActualFurniture} items={furnituresItems}/>
+            <SelectItems style={styles.selectItems} listName={categoryName} chosenValue={actualCategory} setChosenValue={setActualCategory} items={categoryItems}/>
+            <SelectItems style={styles.selectItems} listName={roomName} chosenValue={actualRoom} setChosenValue={setActualRoom} items={roomItems}/>
+            <SelectItems style={styles.selectItems} listName={furnitureName} chosenValue={actualFurniture} setChosenValue={setActualFurniture} items={furnituresItems}/>
             <Box style={styles.imageBox}>
                 <Fab style={styles.fabButton} renderInPortal={false} shadow={5} placement={"bottom-left"} bottom={70} left={20} size="sm" 
                 icon={<Icon color="black" as={MaterialIcons} name="photo-camera" size="sm" />} 
@@ -153,7 +187,7 @@ export default ({isCreatingForm, nameOfObject, chosenCategory, chosenRoom, chose
                 />
                 <Image source={{ uri: image }} style={{ height: 200, borderRadius: 20 }} />
             </Box>
-            <Button style={styles.validateButton} borderRadius="20" onPress={() => changeData()}><Text style={styles.text}>Valider +</Text></Button>
+            {(isCreatingForm) ? addButtons : modifyButtons }
         </KeyboardAwareScrollView>
     )
 }
@@ -162,8 +196,8 @@ const colors = {
     mainGreenColor: "#00FFC2",
     darkGreenColor: "#2B9C81",
     mainGreyColor: "#F3F3F3",
-    darkGreyColor: "#9C9C9C"
-
+    darkGreyColor: "#9C9C9C",
+    darkRedColor: "#FF5C5C",
 };
 
 const styles = StyleSheet.create({
@@ -186,7 +220,12 @@ const styles = StyleSheet.create({
     },
     validateButton: {
         backgroundColor: colors.mainGreenColor,
-        width: 100,
+        width: 130,
+        margin: 10,       
+    },
+    deleteButton: {
+        backgroundColor: colors.darkRedColor,
+        width: 130,
         margin: 10,       
     },
     fabButton: {

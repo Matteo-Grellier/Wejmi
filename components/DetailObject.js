@@ -30,7 +30,7 @@ const DetailObject = ({key, navigation, name,state_id, room, category,id, furnit
         <View >
             <Pressable 
             style={styles.container} 
-            key={key}
+            // key={key}
             onPress={() => {
                 navigation.navigate("Modifier un Objet", {id: id});
             }}

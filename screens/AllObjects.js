@@ -10,7 +10,7 @@ export default ({ navigation }) => {
 	const [object, setObject] = useState([]);
 
 	const DataYe = async () => {
-		await GetObject(setObject);
+		await GetAllObject(setObject);
     };
 
 	useEffect(() => {

@@ -28,15 +28,12 @@ export async function GetAllObject(setData) {
     })
 }
 
-export async function GetObject(setData) {
+export async function GetObject(id, setData) {
     const db = await openDatabase();
-    const selectRequestWithID = "SELECT object.name, object.id_state as state_id ,object.id as id ,furniture.name as furniture, room.name as room, state.name as state, category.name as category FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id";
+    const selectRequestWithID = "SELECT object.*, furniture.name as furniture_name, room.name as room_name, state.name as state_name, category.name as category_name FROM object JOIN furniture ON object.id_furniture = furniture.id JOIN room ON object.id_room = room.id JOIN state ON object.id_state = state.id JOIN category ON object.id_category = category.id WHERE object.id = ?";
     db.transaction((tx) => {
-
-        tx.executeSql(selectRequestWithID,[], (_, {insertID, rows}) => {
-            console.log("test");
+        tx.executeSql(selectRequestWithID,[id], (_, {insertID, rows}) => {
             setData(rows._array);
-            console.log(rows);
             // return rows
         });
     })   
@@ -58,10 +55,10 @@ export async function ModifyObject(id, name, id_room, id_category, id_furniture,
 
 }
 
-export async function DeleteObject() {
+export async function DeleteObject(id) {
     const db = await openDatabase();
     db.transaction((tx) => {
-        tx.executeSql("DELETE FROM object WHERE id ;", [] );
+        tx.executeSql("DELETE FROM object WHERE id = ?;", [id] );
     })
 
 }
@@ -218,14 +215,6 @@ export async function DeleteState(id) {
     const db = await openDatabase();
     db.transaction((tx) => {
         tx.executeSql("DELETE FROM state WHERE id = ?;", [id] );
-    })
-
-}
-
-export async function ModifyState(name) {
-    const db = await openDatabase();
-    db.transaction((tx) => {
-        tx.executeSql("UPDATE state SET name = ? WHERE id = ?", [name] );
     })
 
 }
